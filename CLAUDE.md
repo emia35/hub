@@ -22,6 +22,7 @@ Réflexes repris de la BAF : boutons nommés d'après l'action, pas de `confirm(
 ## Choix actés
 
 Pas d'auteur nommé pour le hub (« Créé par l'EMIA35 »), mais les créateurs sous chaque outil dans Ressources.
-« EMIA35 » du titre : couleurs de la colonne « texte coloré » de la charte (les couleurs pures sont interdites en texte sur blanc).
+« EMIA35 » du titre : couleurs pleines du logo, à la demande d'Arthur. Exception assumée à la section 4 de la charte (orange, cyan et vert purs interdits en texte sur blanc), à reporter dans la prochaine version.
+Après toute retouche : cliquer dans toutes les pages avant de publier, pas seulement mesurer l'accueil.
 Le pro installe `/hub/douleur/` sur l'écran de la personne. Trois appuis sur la fleur de l'outil mènent à `../?retour=douleur`, qui affiche en haut du hub « Revenir à Comment je me sens ».
 En-tête de l'outil : sur son écran d'accueil seulement, fleur à gauche et logo à droite, sans le texte du hub.

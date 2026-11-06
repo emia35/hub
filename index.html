@@ -54,12 +54,13 @@ img,svg{display:block}
 .marque{display:flex;align-items:center;gap:10px;min-height:44px;min-width:0;text-decoration:none;color:var(--emia-marine);font:700 18px/1.2 var(--emia-police-titre)}
 .marque img{width:40px;height:40px;flex-shrink:0}
 .lettres b{font-weight:700}
-.lettres b:nth-child(1){color:var(--emia-orange-texte)}
-.lettres b:nth-child(2){color:var(--emia-rouge-texte)}
-.lettres b:nth-child(3){color:var(--emia-violet-texte)}
-.lettres b:nth-child(4){color:var(--emia-bleu-texte)}
-.lettres b:nth-child(5){color:var(--emia-cyan-texte)}
-.lettres b:nth-child(6){color:var(--emia-vert-texte)}
+/* Les couleurs pleines du logo, à la demande d'Arthur (exception à la section 4 de la charte). */
+.lettres b:nth-child(1){color:var(--emia-orange)}
+.lettres b:nth-child(2){color:var(--emia-rouge)}
+.lettres b:nth-child(3){color:var(--emia-violet)}
+.lettres b:nth-child(4){color:var(--emia-bleu)}
+.lettres b:nth-child(5){color:var(--emia-cyan)}
+.lettres b:nth-child(6){color:var(--emia-vert)}
 .logo-emia{flex-shrink:0}
 .logo-emia img{width:128px;height:auto}
 .barre{height:4px;background:linear-gradient(90deg,
@@ -147,12 +148,13 @@ details.repli[open] summary::before{transform:rotate(45deg)}
 .pied a{color:var(--emia-gris-texte)}
 
 /* L'accueil tient sur un écran, sans défilement */
-body[data-vue="accueil"] main{max-width:1100px;padding:12px 16px}
-.heros{max-width:860px;margin:0 auto 18px;text-align:center}
-.heros>img{width:96px;height:96px;margin:0 auto 8px}
-.heros .lecture{margin-bottom:10px}
+body[data-vue="accueil"] main{display:flex;max-width:1100px;padding:12px 16px}
+section[data-page="accueil"]{flex:1;min-width:0;display:flex;flex-direction:column;justify-content:space-evenly;gap:10px}
+.heros{width:100%;max-width:860px;margin:0 auto;text-align:center}
+.heros>img{width:clamp(130px,23vh,210px);height:clamp(130px,23vh,210px);margin:0 auto 10px}
+.heros .lecture{margin-bottom:8px}
 .heros .lecture p{margin-bottom:6px}
-.heros .bouton{min-height:44px;padding:8px 22px}
+.heros .bouton{min-height:36px;padding:5px 16px;font-size:14px;border-width:1.5px}
 .modules{gap:16px}
 .module{display:grid;grid-template-columns:48px 1fr;grid-template-areas:"pastille titre" "pastille etat" "desc desc";column-gap:12px;row-gap:2px;align-items:center;align-content:start;min-height:0;padding:14px 16px}
 .module .pastille{grid-area:pastille}
@@ -167,8 +169,8 @@ body[data-vue="accueil"] main{max-width:1100px;padding:12px 16px}
   h1{font-size:28px}
   /* Téléphone : l'essentiel d'abord, le détail reste sur la page EMIA et dans chaque module. */
   .modules{grid-template-columns:1fr;gap:8px}
-  .heros{margin-bottom:12px}
-  .heros>img{width:64px;height:64px;margin-bottom:4px}
+  .heros>img{width:clamp(72px,14vh,120px);height:clamp(72px,14vh,120px);margin-bottom:6px}
+  .heros .bouton{min-height:40px}
   .heros .lecture p{line-height:1.4}
   .heros .lecture p+p{display:none}
   .module{grid-template-columns:40px 1fr;padding:8px 12px;grid-template-areas:"pastille titre" "pastille etat"}
@@ -374,6 +376,12 @@ const OUTILS = [
 
 /* Les notes de version, la plus récente en premier. La première donne le numéro du pied de page. */
 const NOTES_VERSION = [
+  {
+    version: 'v2026.11.06-6',
+    date: '6 novembre 2026',
+    titre: "Un accueil rééquilibré",
+    texte: "La fleur est plus grande, le bouton plus discret et les modules mieux répartis sur la page. Les lettres EMIA35 de l'en-tête prennent les couleurs du logo."
+  },
   {
     version: 'v2026.11.06-5',
     date: '6 novembre 2026',
