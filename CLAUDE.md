@@ -6,12 +6,13 @@ Public : professionnels et familles. Registre partenaires de la charte (vouvoiem
 ## Contenu du dossier
 
 `index.html` : tout le hub, en un fichier. Pages par adresse : `#accueil`, `#emia`, `#processus`, `#reperes`, `#ressources`, `#notes`.
+`douleur/` : l'outil « Comment je me sens ? » et son contexte complet (`douleur/CLAUDE.md`, à lire avant d'y toucher, avec les pièges Android).
 `logos/`, `polices/` : copies du kit de la charte (polices réduites au latin, en woff2 ; logos non modifiés).
-`passation_claude_code_EMIA35/` et `Comment je me sens/` : archives de la passation, à ne pas publier. Le contexte complet de l'outil douleur est dans `passation_claude_code_EMIA35/passation/douleur/CLAUDE.md`.
+`passation_claude_code_EMIA35/` et `Comment je me sens/` : archives de la passation, à ne pas publier.
 
 ## Pour faire vivre le hub
 
-En tête du `<script>` d'`index.html` : `OUTILS` (un bloc par outil de la page Ressources), `NOTES_VERSION` (la plus récente en premier ; elle donne le numéro du pied de page), `ADRESSE_DOULEUR` (à passer à `'douleur/'` en passe 2).
+En tête du `<script>` d'`index.html` : `OUTILS` (un bloc par outil de la page Ressources), `NOTES_VERSION` (la plus récente en premier ; elle donne le numéro du pied de page), `ADRESSE_DOULEUR`.
 
 ## Règles
 
