@@ -61,7 +61,7 @@ Journal : `localStorage['douleur_journal']`, une entrée par récap atteint (`ts
 
 Synthèse vocale : Web Speech API, `fr-FR`, voix masculine ou féminine cherchée par nom selon `config.sexe`, repli sur la première voix française.
 
-En-tête : bouton Accueil (masqué sur l'accueil), titre centré ; logo « by EMIA35 » en haut à droite **sur l'accueil seulement**, non cliquable. Pied de page fixe sur toutes les pages : « Outil créé par l'EMIA35 — emia35@adapei35.asso.fr », non cliquable (les usagers ouvraient leur messagerie par erreur). L'en-tête global est masqué dans les Paramètres, qui ont le leur.
+En-tête : sur l'accueil, fleur avec repères à gauche (trois appuis mènent au hub, `../?retour=douleur`) et logo texte à droite, 120 px ; ailleurs, bouton Accueil et titre centré. Pied de page fixe sur toutes les pages : « Outil créé par l'EMIA35 — emia35@adapei35.asso.fr », non cliquable (les usagers ouvraient leur messagerie par erreur). L'en-tête global est masqué dans les Paramètres, qui ont le leur.
 
 ## 5. Pièges Android : à lire avant de toucher aux Paramètres
 
@@ -101,13 +101,24 @@ Diagnostic qui a marché : construire une page de test minimale qui reproduit un
 
 ```bash
 npm install
-npm test        # test de fumée jsdom : 31 vérifications, toutes doivent passer
+npm test        # test de fumée jsdom : 42 vérifications, toutes doivent passer
 ```
 
 jsdom ne voit ni la mise en page, ni le défilement, ni les bugs de rendu Android du §5. Après chaque passe : test sur vrai téléphone Android par Arthur (ouvrir/fermer les Paramètres plusieurs fois de suite, changer chaque réglage, vérifier l'aperçu, refaire un parcours complet).
 
 `build.py` (générateur Python des silhouettes, utilisé pendant le développement sur claude.ai) n'a pas été conservé : **`index.html` est désormais la source**. Les silhouettes sont dans la constante `FIGURES`.
 
-## 9. Chantier suivant
+## 9. Passe 3, mise à la charte (6 novembre 2026)
 
-Mise à la charte graphique EMIA35 : voir `docs/BRIEF_LIFTING_CHARTE.md` et la charte (`CHARTE_GRAPHIQUE_EMIA35.md`, v0.3). Commencer par les questions de ce brief, ne rien coder avant les réponses d'Arthur.
+Faite sur la nouvelle adresse seulement ; l'ancienne reste telle quelle, ce qui autorise les essais. Décisions d'Arthur :
+
+- Couleurs de la charte (variables ). « Je vais bien » : texte marine.
+- Échelle de 1 à 10 : rouge EMIA de plus en plus intense (constante ), chiffre marine puis blanc pour 9 et 10.
+- Emojis : dessins Noto (Android) embarqués en SVG (, , attribut ), licence Apache 2.0, citée dans les Paramètres. Les deux PNG d'Arthur sont inchangés.
+- **Écart à la charte assumé** : la police côté personne est Nunito (titres en Montserrat), alors que la charte prévoit Arial pour les supports CAA et FALC. Pour essayer Arial, changer  en une ligne.
+- **Écart à la charte assumé** : petite fleur sur l'accueil de l'outil, côté personne.
+- Polices et logos embarqués en base64, sauf les logos partenaires des Paramètres (). Plus de Google Fonts.
+- « Vider le journal » : confirmation dans la carte, sans fenêtre par-dessus (voir §5), « Garder le journal » ayant le focus.
+- Hauteurs inférieures à 600 px : accueil resserré ().
+
+Restent ouverts : le message sur l'ancienne adresse (rien pour l'instant), le code PIN mort à nettoyer, l'avis de Géraldine Deniard quand les essais auront avancé.

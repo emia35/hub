@@ -54,7 +54,7 @@ w.setNuances('2');
 // --- Parcours inconnu
 w.startUnknown(); w.toggleZone('tete', 'Tête', 'à la tête'); w.goRecap();
 A(d.getElementById('recapSentence').textContent === "J'ai quelque chose à la tête. Tu peux m'aider ?", 'phrase « je ne sais pas »');
-A(d.getElementById('recapEmoji').textContent.includes('❓'), 'récap inconnu : ❓');
+A(d.querySelector('#recapEmoji img.emo') !== null, 'récap inconnu : ❓ en image');
 
 // --- Paramètres : triple appui, sans code
 w.goHome();
@@ -89,6 +89,33 @@ A(d.getElementById('recapSentence').textContent === "Ça brûle à la main gauch
 const j = JSON.parse(w.localStorage.getItem('douleur_journal') || '[]');
 A(j.length >= 5, 'journal alimenté (' + j.length + ' entrées)');
 A(w.journalCSV().split('\n').length === j.length + 1, 'CSV cohérent avec le journal');
+
+// --- Passe 3 : emojis embarqués, échelle, fleur, journal
+w.goHome();
+A(d.querySelectorAll('.home-btns img.emo').length >= 3, 'accueil : emojis en images');
+A(!/\p{Extended_Pictographic}/u.test(d.querySelector('.home-btns').textContent), 'accueil : plus aucun emoji système');
+w.setNuances('10'); w.startPain();
+const n = [...d.querySelectorAll('#intensityOptions .num-btn')];
+A(n[0].style.background !== n[9].style.background, 'échelle : couleurs différentes de 1 à 10');
+w.selectIntensityNum(10); w.goRecap();
+A(d.getElementById('recapEmoji').className.includes('num') && d.getElementById('recapEmoji').textContent === '10', 'récap numérique : chiffre affiché');
+w.setNuances('2'); w.startUnknown(); w.goRecap();
+A(!d.getElementById('recapEmoji').className.includes('num') && d.getElementById('recapEmoji').style.background === '', 'récap : pas de fond résiduel après un chiffre');
+w.goHome();
+let hub = 0; w.goHub = () => { hub++; };
+w.fleurTap(); w.fleurTap();
+A(hub === 0, 'deux appuis sur la fleur : rien');
+w.fleurTap();
+A(hub === 1, 'trois appuis sur la fleur : vers le hub');
+A(d.getElementById('viderConfirme').hidden === true, 'journal : confirmation repliée');
+w.titleTap(); w.titleTap(); w.titleTap();
+w.demanderVider();
+A(d.getElementById('viderConfirme').hidden === false, 'journal : confirmation ouverte');
+w.annulerVider();
+A(JSON.parse(w.localStorage.getItem('douleur_journal') || '[]').length > 0, 'journal gardé après « Garder le journal »');
+w.demanderVider(); w.clearJournal();
+A(w.localStorage.getItem('douleur_journal') === null && d.getElementById('viderConfirme').hidden === true, 'journal vidé');
+w.closeSettings();
 
 // --- Configuration lue depuis l'URL
 w = boot('https://exemple.github.io/douleur/?sexe=femme&age=enfant&nuances=3&sensations=1&peau=2'); d = w.document;
