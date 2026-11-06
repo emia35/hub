@@ -1,0 +1,420 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Le HUB de l'EMIA35</title>
+<meta name="description" content="Le HUB de l'EMIA35, Équipe Mobile d'Intervention Autisme d'Ille-et-Vilaine : comprendre comment nous intervenons, retrouver nos repères et utiliser nos outils.">
+<meta name="color-scheme" content="only light">
+<link rel="icon" type="image/svg+xml" href="logos/EMIA35_fleur-reperes.svg">
+<link rel="icon" type="image/png" sizes="1000x1000" href="logos/EMIA35_fleur-reperes_1000px.png">
+<link rel="apple-touch-icon" href="logos/EMIA35_fleur-reperes_1000px.png">
+<style>
+/* Polices de la charte, servies depuis le dépôt : aucune dépendance à Google Fonts. */
+@font-face{font-family:"Montserrat";font-weight:600;font-display:swap;src:url(polices/Montserrat-SemiBold.woff2) format("woff2")}
+@font-face{font-family:"Montserrat";font-weight:700;font-display:swap;src:url(polices/Montserrat-Bold.woff2) format("woff2")}
+@font-face{font-family:"Nunito";font-weight:400;font-display:swap;src:url(polices/Nunito-Regular.woff2) format("woff2")}
+@font-face{font-family:"Nunito";font-weight:700;font-display:swap;src:url(polices/Nunito-Bold.woff2) format("woff2")}
+
+/* Variables de la charte EMIA35 v0.3, section 6, reprises telles quelles. */
+:root {
+  --emia-orange: #FF9B3B;  --emia-orange-pastel: #FFF5EB;  --emia-orange-texte: #BA5B00;
+  --emia-rouge:  #F13F22;  --emia-rouge-pastel:  #FEECE9;  --emia-rouge-texte:  #E32C0E;
+  --emia-violet: #6F53B2;  --emia-violet-pastel: #F1EEF7;  --emia-violet-texte: #6F53B2;
+  --emia-bleu:   #1975DD;  --emia-bleu-pastel:   #E8F1FC;  --emia-bleu-texte:   #1975DD;
+  --emia-cyan:   #19B7D5;  --emia-cyan-pastel:   #E8F8FB;  --emia-cyan-texte:   #128297;
+  --emia-vert:   #68C252;  --emia-vert-pastel:   #F0F9EE;  --emia-vert-texte:   #40842F;
+  --emia-marine: #043471;  --emia-gris-texte: #5B6275;  --emia-filet: #E3E6EE;
+  --emia-fond: #FFFFFF;    --emia-fond-clair: #F7F8FB;
+  --emia-rayon: 12px;      --emia-bordure: 2px;
+  --emia-police-titre: "Montserrat", Arial, sans-serif;
+  --emia-police-texte: "Nunito", Arial, sans-serif;
+  --emia-police-falc: Arial, sans-serif;
+}
+
+*{box-sizing:border-box}
+html{color-scheme:only light;-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100dvh;display:flex;flex-direction:column;background:var(--emia-fond);color:var(--emia-marine);font:400 16px/1.6 var(--emia-police-texte)}
+main{flex:1;width:100%;max-width:980px;margin:0 auto;padding:32px 16px 48px}
+h1,h2,h3{font-family:var(--emia-police-titre);color:var(--emia-marine);line-height:1.25;margin:0}
+h1{font-size:30px;font-weight:700}
+h2{font-size:19px;font-weight:700;margin:32px 0 8px}
+h1:focus{outline:none}
+a{color:var(--emia-bleu-texte)}
+img,svg{display:block}
+:focus-visible{outline:3px solid var(--emia-bleu);outline-offset:2px;border-radius:4px}
+[hidden]{display:none!important}
+
+/* Le texte qu'on lit est justifié ; l'interface reste à gauche. */
+.lecture p{margin:0 0 12px;text-align:justify;text-justify:inter-word;hyphens:auto}
+
+/* En-tête */
+.entete{position:sticky;top:0;z-index:10;background:var(--emia-fond)}
+.entete-ligne{max-width:1180px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px}
+.marque{display:flex;align-items:center;gap:10px;min-height:44px;min-width:0;text-decoration:none;color:var(--emia-marine);font:700 18px/1.2 var(--emia-police-titre)}
+.marque img{width:40px;height:40px;flex-shrink:0}
+.lettres b{font-weight:700}
+.lettres b:nth-child(1){color:var(--emia-orange-texte)}
+.lettres b:nth-child(2){color:var(--emia-rouge-texte)}
+.lettres b:nth-child(3){color:var(--emia-violet-texte)}
+.lettres b:nth-child(4){color:var(--emia-bleu-texte)}
+.lettres b:nth-child(5){color:var(--emia-cyan-texte)}
+.lettres b:nth-child(6){color:var(--emia-vert-texte)}
+.logo-emia{flex-shrink:0}
+.logo-emia img{width:128px;height:auto}
+.barre{height:4px;background:linear-gradient(90deg,
+  var(--emia-orange) 0 16.66%,var(--emia-rouge) 0 33.33%,var(--emia-violet) 0 50%,
+  var(--emia-bleu) 0 66.66%,var(--emia-cyan) 0 83.33%,var(--emia-vert) 0)}
+
+/* Retour vers l'outil, visible seulement quand on arrive depuis « Comment je me sens ? » */
+.retour-outil{background:var(--emia-bleu-pastel);padding:12px 16px;text-align:center}
+
+/* Boutons : pilules nommées d'après ce qu'elles font */
+.bouton{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 24px;border:var(--emia-bordure) solid var(--emia-bleu);border-radius:999px;background:var(--emia-bleu);color:#fff;font:600 16px/1.25 var(--emia-police-titre);text-decoration:none;text-align:center}
+.bouton:hover{background:var(--emia-marine);border-color:var(--emia-marine)}
+.bouton.leger{background:var(--emia-fond);color:var(--emia-bleu-texte)}
+.bouton.leger:hover{background:var(--emia-bleu-pastel);color:var(--emia-marine);border-color:var(--emia-bleu)}
+.lien-retour{display:inline-flex;align-items:center;gap:6px;min-height:44px;margin-bottom:8px;color:var(--emia-gris-texte);font:600 15px var(--emia-police-titre);text-decoration:none}
+.lien-retour:hover{color:var(--emia-marine)}
+
+/* Accueil */
+.heros{max-width:720px;margin:0 auto 36px;text-align:center}
+.heros>img{width:150px;height:150px;margin:0 auto 12px}
+.heros .lecture{margin-bottom:16px}
+.modules{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.module{position:relative;display:flex;flex-direction:column;gap:8px;min-height:190px;padding:20px;border-radius:var(--emia-rayon);text-decoration:none;color:var(--emia-marine);transition:transform .15s ease}
+.module:hover{transform:translateY(-3px)}
+.module.orange{background:var(--emia-orange)}
+.module.violet{background:var(--emia-violet);color:#fff}
+.module.cyan{background:var(--emia-cyan)}
+.module b{font:700 20px/1.25 var(--emia-police-titre)}
+.module span.desc{font-size:16px;line-height:1.45}
+.pastille{display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:#fff;color:var(--emia-marine);flex-shrink:0}
+.pastille svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.etiquette{position:absolute;top:20px;right:20px;padding:3px 12px;border-radius:999px;background:#fff;color:var(--emia-marine);font:600 13px/1.4 var(--emia-police-titre)}
+
+/* Pages intérieures */
+.page{max-width:760px;margin:0 auto}
+.sous-titre{margin:8px 0 24px;color:var(--emia-gris-texte)}
+.temps{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:16px 0}
+.carte{padding:18px 20px;border:var(--emia-bordure) solid;border-radius:var(--emia-rayon)}
+.carte h3{font-size:18px;font-weight:700}
+.carte.violet{background:var(--emia-violet-pastel);border-color:var(--emia-violet)}
+.carte.cyan{background:var(--emia-cyan-pastel);border-color:var(--emia-cyan)}
+.carte.orange{background:var(--emia-orange-pastel);border-color:var(--emia-orange)}
+.carte.vert{background:var(--emia-vert-pastel);border-color:var(--emia-vert)}
+.carte .lecture{margin-top:10px}
+.carte .lecture p:last-child{margin-bottom:0}
+.temps .carte h3{display:flex;align-items:center;gap:10px}
+.numero{display:inline-flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:50%;flex-shrink:0;font:700 19px var(--emia-police-titre)}
+.carte.violet .numero{background:var(--emia-violet);color:#fff}
+.carte.cyan .numero{background:var(--emia-cyan);color:var(--emia-marine)}
+.encadre{display:flex;align-items:stretch;gap:14px;margin:24px 0;padding:16px 18px;border-radius:20px;background:var(--emia-bleu-pastel)}
+.encadre .i{display:flex;align-items:center;padding-right:14px;border-right:var(--emia-bordure) solid var(--emia-bleu);color:var(--emia-bleu-texte);font:700 24px var(--emia-police-titre)}
+.encadre p{margin:0}
+
+/* Ressources */
+.outils{display:grid;gap:20px}
+.outil{display:flex;flex-direction:column;gap:6px}
+.outil .pilule{align-self:flex-start;padding:3px 14px;border-radius:999px;font:600 14px/1.5 var(--emia-police-titre)}
+.outil.orange .pilule{background:var(--emia-orange);color:var(--emia-marine)}
+.outil.vert .pilule{background:var(--emia-vert);color:var(--emia-marine)}
+.outil h2{margin:6px 0 0;font-size:20px}
+.outil .lecture{margin:0}
+.outil .lecture p{margin:0}
+.outil .bouton{align-self:flex-start;margin-top:10px}
+.credit{margin:4px 0 0;color:var(--emia-gris-texte);font-size:15px}
+details.repli{margin-top:8px;border-top:1px solid var(--emia-filet)}
+details.repli summary{display:flex;align-items:center;gap:8px;min-height:44px;cursor:pointer;font:600 15px var(--emia-police-titre);list-style:none}
+details.repli summary::-webkit-details-marker{display:none}
+details.repli summary::before{content:"";width:8px;height:8px;margin:0 4px 0 2px;border-right:2px solid;border-bottom:2px solid;transform:rotate(-45deg);transition:transform .15s ease}
+details.repli[open] summary::before{transform:rotate(45deg)}
+.etape{display:flex;gap:10px;margin:0 0 8px}
+.etape i{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;flex-shrink:0;border-radius:50%;background:var(--emia-vert);font:700 14px var(--emia-police-titre);font-style:normal}
+
+/* Notes de version */
+.note{padding:16px 0;border-top:1px solid var(--emia-filet)}
+.note h2{margin:0 0 6px;font-size:18px}
+.note .date{color:var(--emia-gris-texte);font-size:15px;margin:0 0 6px}
+
+/* Pied de page */
+.pied{background:var(--emia-fond-clair);border-top:1px solid var(--emia-filet);font-size:15px;color:var(--emia-gris-texte)}
+.pied-ligne{max-width:980px;margin:0 auto;padding:18px 16px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px}
+.partenaires{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;padding:10px 14px;border-radius:var(--emia-rayon);background:#fff}
+.partenaires img:first-child{width:104px;height:auto}
+.partenaires img:last-child{width:120px;height:auto}
+.pied-texte{display:flex;flex-direction:column;gap:2px;flex:1 1 300px;max-width:520px}
+.pied a{color:var(--emia-marine)}
+.pied a.version{display:inline-flex;align-items:center;min-height:32px}
+
+@media (max-width:760px){
+  main{padding-top:24px}
+  .modules,.temps{grid-template-columns:1fr}
+  .module{min-height:0}
+  .heros>img{width:120px;height:120px}
+  h1{font-size:28px}
+}
+@media (max-width:420px){
+  .entete-ligne{padding:8px 16px;gap:10px}
+  .marque{font-size:15px;gap:8px}
+  .marque img{width:34px;height:34px}
+  .logo-emia img{width:120px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="entete">
+  <div class="entete-ligne">
+    <a class="marque" href="#accueil" aria-label="Le HUB de l'EMIA35, revenir à l'accueil">
+      <img src="logos/EMIA35_fleur-reperes.svg" alt="">
+      <span>Le HUB de l'<span class="lettres"><b>E</b><b>M</b><b>I</b><b>A</b><b>3</b><b>5</b></span></span>
+    </a>
+    <a class="logo-emia" href="#emia" aria-label="Découvrir l'EMIA35"><img src="logos/EMIA35_logo.svg" alt="EMIA35"></a>
+  </div>
+  <div class="barre"></div>
+</header>
+
+<div class="retour-outil" id="retour-outil" hidden>
+  <a class="bouton" id="retour-outil-lien" href="#">Revenir à Comment je me sens</a>
+</div>
+
+<main id="contenu">
+
+  <section data-page="accueil" data-titre="Le HUB de l'EMIA35">
+    <div class="heros">
+      <img src="logos/EMIA35_fleur-reperes.svg" alt="">
+      <h1 class="sr" tabindex="-1" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">Le HUB de l'EMIA35</h1>
+      <div class="lecture">
+        <p>Ce hub rassemble ce que l'Équipe Mobile d'Intervention Autisme d'Ille-et-Vilaine met à la disposition des professionnels et des familles : comprendre comment nous intervenons, retrouver les notions qui nous servent de repères, et utiliser nos outils.</p>
+        <p>L'EMIA35 intervient auprès de personnes autistes de plus de seize ans, lorsque leurs comportements entraînent une souffrance, un risque de rupture de parcours ou une mise en danger.</p>
+      </div>
+      <a class="bouton leger" href="#emia">En savoir plus sur l'EMIA35</a>
+    </div>
+
+    <nav class="modules" aria-label="Les modules du hub">
+      <a class="module orange" href="#processus">
+        <span class="pastille"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="17" r="2.5"/><circle cx="12" cy="7" r="2.5"/><circle cx="19" cy="17" r="2.5"/><path d="M6.5 15 10.5 9M13.5 9l4 6"/></svg></span>
+        <span class="etiquette">En construction</span>
+        <b>Processus d'intervention</b>
+        <span class="desc">Comment se déroule une intervention de l'EMIA35, étape par étape.</span>
+      </a>
+      <a class="module violet" href="#reperes">
+        <span class="pastille"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+        <span class="etiquette">En construction</span>
+        <b>Repères</b>
+        <span class="desc">Les notions et les concepts qui aident à comprendre.</span>
+      </a>
+      <a class="module cyan" href="#ressources">
+        <span class="pastille"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18M12 11.5v3"/></svg></span>
+        <b>Ressources</b>
+        <span class="desc">Notre boîte à outils, à utiliser avec vos équipes ou en famille.</span>
+      </a>
+    </nav>
+  </section>
+
+  <section class="page" data-page="emia" data-titre="L'EMIA35" hidden>
+    <a class="lien-retour" href="#accueil">← Revenir à l'accueil</a>
+    <h1 tabindex="-1">L'EMIA35</h1>
+    <p class="sous-titre">Équipe Mobile d'Intervention Autisme d'Ille-et-Vilaine</p>
+    <div class="lecture">
+      <p>L'EMIA35 est née en 2018 d'un co-portage entre le Centre Hospitalier Guillaume Régnier et l'Adapei 35, avec une envie assumée : faire travailler ensemble le sanitaire et le médico-social.</p>
+    </div>
+
+    <h2>Pour qui ?</h2>
+    <div class="lecture">
+      <p>Nous intervenons auprès de personnes de plus de seize ans, autistes, avec un diagnostic posé ou fortement suspecté, dont les comportements, par leur intensité, leur fréquence ou leur durée, entraînent une souffrance, un risque de rupture de parcours, voire une mise en danger, pour elles-mêmes ou pour leur entourage.</p>
+      <p>L'équipe peut être sollicitée par les familles, par les institutions, ou par les personnes elles-mêmes.</p>
+    </div>
+
+    <h2>Qui sommes-nous ?</h2>
+    <div class="lecture">
+      <p>L'équipe est pluridisciplinaire : médecin psychiatre, coordinatrices éducatrices et infirmière, ergothérapeute, assistante sociale, psychologues. Chaque intervention est confiée à un binôme, une coordinatrice et un psychologue, autour duquel les autres professionnels interviennent selon les besoins.</p>
+    </div>
+
+    <h2>Comment intervenons-nous ?</h2>
+    <div class="temps">
+      <div class="carte violet">
+        <h3><span class="numero">1</span>Prendre la mesure</h3>
+        <div class="lecture"><p>On l'appelle d'ordinaire « évaluation », mais nous ne sommes pas là pour noter : nous sommes là pour comprendre. Observations sur les lieux de vie, évaluations de la communication ou de la sensorialité, entretiens avec la personne, sa famille, les équipes : ce temps est construit sur mesure. Il aboutit à un bilan d'intervention et à des préconisations.</p></div>
+      </div>
+      <div class="carte cyan">
+        <h3><span class="numero">2</span>Accompagner les préconisations</h3>
+        <div class="lecture"><p>L'équipe reste ensuite aux côtés de la personne, de sa famille ou de l'institution pour les mettre en place, et pour les ajuster, parce qu'elles s'ajustent toujours.</p></div>
+      </div>
+    </div>
+    <div class="lecture">
+      <p>Tout au long de l'intervention, la réunion d'équipe est le lieu où chacun, depuis sa place, peut dire quelque chose de la situation, et où l'analyse se construit à plusieurs.</p>
+    </div>
+
+    <div class="encadre">
+      <span class="i" aria-hidden="true">i</span>
+      <p>Pour écrire à l'équipe : <a href="mailto:emia35@adapei35.asso.fr">emia35@adapei35.asso.fr</a></p>
+    </div>
+  </section>
+
+  <section class="page" data-page="processus" data-titre="Processus d'intervention" hidden>
+    <a class="lien-retour" href="#accueil">← Revenir à l'accueil</a>
+    <h1 tabindex="-1">Processus d'intervention</h1>
+    <div class="encadre">
+      <span class="i" aria-hidden="true">i</span>
+      <p><b>Cette page est en construction.</b> Nous y expliquerons, pour les professionnels et les familles, comment se déroule une intervention de l'EMIA35, étape par étape.</p>
+    </div>
+    <a class="bouton leger" href="#emia">Découvrir l'EMIA35 en attendant</a>
+  </section>
+
+  <section class="page" data-page="reperes" data-titre="Repères" hidden>
+    <a class="lien-retour" href="#accueil">← Revenir à l'accueil</a>
+    <h1 tabindex="-1">Repères</h1>
+    <div class="encadre">
+      <span class="i" aria-hidden="true">i</span>
+      <p><b>Cette page est en construction.</b> Nous y rassemblerons les notions et les concepts qui aident à comprendre les situations que nous rencontrons.</p>
+    </div>
+    <a class="bouton leger" href="#ressources">Voir les ressources en attendant</a>
+  </section>
+
+  <section class="page" data-page="ressources" data-titre="Ressources" hidden>
+    <a class="lien-retour" href="#accueil">← Revenir à l'accueil</a>
+    <h1 tabindex="-1">Ressources</h1>
+    <p class="sous-titre">La boîte à outils de l'EMIA35.</p>
+    <div class="outils" id="liste-outils"></div>
+  </section>
+
+  <section class="page" data-page="notes" data-titre="Notes de version" hidden>
+    <a class="lien-retour" href="#accueil">← Revenir à l'accueil</a>
+    <h1 tabindex="-1">Notes de version</h1>
+    <p class="sous-titre">Ce qui change sur le hub, de la version la plus récente à la plus ancienne.</p>
+    <div id="liste-notes"></div>
+  </section>
+
+</main>
+
+<footer class="pied">
+  <div class="pied-ligne">
+    <div class="partenaires">
+      <img src="logos/Adapei35_logo.png" alt="Adapei 35">
+      <img src="logos/CHGR_logo.png" alt="Centre Hospitalier Guillaume Régnier">
+    </div>
+    <div class="pied-texte">
+      <span>Créé par l'EMIA35</span>
+      <span>Outil en construction : vos remarques et retours sont les bienvenus à <a href="mailto:emia35@adapei35.asso.fr">emia35@adapei35.asso.fr</a></span>
+      <a class="version" href="#notes"><span id="version"></span>&nbsp;· Notes de version</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ==========================================================================
+   À MODIFIER ICI POUR FAIRE VIVRE LE HUB
+   ========================================================================== */
+
+/* L'adresse de « Comment je me sens ? ». Passe 2 : remplacer par 'douleur/'. */
+const ADRESSE_DOULEUR = 'https://arthurguillieux.github.io/douleur/';
+
+/* Les outils de la page Ressources. Ajouter un outil = ajouter un bloc.
+   couleur : orange ou vert (fond pastel, bordure, étiquette).
+   aide : facultatif, texte replié sous le bouton. */
+const OUTILS = [
+  {
+    couleur: 'orange',
+    etiquette: 'Pour les équipes et les familles',
+    nom: 'BAF, Boussole pour une Analyse Fonctionnelle',
+    description: 'Pour comprendre à quoi sert un comportement-défi : recueillir ce que chacun observe, l\'organiser, puis l\'interpréter.',
+    adresse: 'https://emia35.github.io/baf/',
+    bouton: 'Ouvrir la BAF',
+    credit: 'Créé par Émilie Musard et Arthur Guillieux'
+  },
+  {
+    couleur: 'vert',
+    etiquette: 'Pour les personnes accompagnées',
+    nom: 'Comment je me sens ?',
+    description: 'Pour dire en quelques appuis qu\'on a mal, combien et où, ou qu\'on ressent autre chose. L\'outil s\'adresse aux personnes capables d\'évaluer elles-mêmes ce qu\'elles ressentent.',
+    adresse: ADRESSE_DOULEUR,
+    bouton: 'Ouvrir Comment je me sens',
+    credit: 'Créé par Géraldine Deniard et Arthur Guillieux',
+    aide: {
+      titre: 'Installer et régler l\'outil',
+      etapes: [
+        'Ouvrez l\'outil sur le téléphone ou la tablette de la personne.',
+        'Appuyez trois fois sur le titre « Comment je me sens ? » pour ouvrir les paramètres, puis réglez le profil et les niveaux de douleur.',
+        'Depuis le menu du navigateur, ajoutez la page à l\'écran d\'accueil de l\'appareil.'
+      ],
+      note: 'Le journal reste sur l\'appareil : rien n\'est envoyé. Cet outil aide à communiquer ; il ne remplace ni une mesure de la douleur, ni l\'observation par les proches et les professionnels.'
+    }
+  }
+];
+
+/* Les notes de version, la plus récente en premier. La première donne le numéro du pied de page. */
+const NOTES_VERSION = [
+  {
+    version: 'v2026.11.06-1',
+    date: '6 novembre 2026',
+    titre: 'Ouverture du hub',
+    texte: 'Première version : une page d\'accueil, une présentation de l\'EMIA35, une page Ressources avec la BAF et Comment je me sens. Les pages Processus d\'intervention et Repères sont en construction.'
+  }
+];
+
+/* ==========================================================================
+   Le fonctionnement du hub
+   ========================================================================== */
+
+function echapper(t) {
+  return String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+}
+
+function afficherOutils() {
+  document.getElementById('liste-outils').innerHTML = OUTILS.map(o => `
+    <article class="carte outil ${o.couleur}">
+      <span class="pilule">${echapper(o.etiquette)}</span>
+      <h2>${echapper(o.nom)}</h2>
+      <div class="lecture"><p>${echapper(o.description)}</p></div>
+      <a class="bouton" href="${echapper(o.adresse)}">${echapper(o.bouton)}</a>
+      <p class="credit">${echapper(o.credit)}</p>
+      ${o.aide ? `<details class="repli">
+        <summary>${echapper(o.aide.titre)}</summary>
+        ${o.aide.etapes.map((e, i) => `<p class="etape"><i>${i + 1}</i><span>${echapper(e)}</span></p>`).join('')}
+        <div class="lecture"><p>${echapper(o.aide.note)}</p></div>
+      </details>` : ''}
+    </article>`).join('');
+}
+
+function afficherNotes() {
+  document.getElementById('version').textContent = NOTES_VERSION[0].version;
+  document.getElementById('liste-notes').innerHTML = NOTES_VERSION.map(n => `
+    <article class="note">
+      <h2>${echapper(n.titre)}</h2>
+      <p class="date">${echapper(n.version)}, ${echapper(n.date)}</p>
+      <div class="lecture"><p>${echapper(n.texte)}</p></div>
+    </article>`).join('');
+}
+
+/* Une seule page visible à la fois, choisie par l'adresse (#emia, #ressources…). */
+function route(premierAffichage) {
+  const voulue = location.hash.slice(1);
+  const pages = [...document.querySelectorAll('[data-page]')];
+  const page = pages.find(p => p.dataset.page === voulue) || pages[0];
+  pages.forEach(p => { p.hidden = p !== page; });
+  document.title = page.dataset.page === 'accueil' ? page.dataset.titre : page.dataset.titre + ' · Le HUB de l\'EMIA35';
+  if (!premierAffichage) {
+    window.scrollTo(0, 0);
+    const titre = page.querySelector('h1');
+    if (titre) titre.focus({preventScroll: true});
+  }
+}
+
+/* Arrivée depuis l'outil (trois appuis sur la fleur) : un chemin de retour bien visible. */
+function preparerRetourOutil() {
+  if (new URLSearchParams(location.search).get('retour') !== 'douleur') return;
+  document.getElementById('retour-outil-lien').href = ADRESSE_DOULEUR;
+  document.getElementById('retour-outil').hidden = false;
+}
+
+afficherOutils();
+afficherNotes();
+preparerRetourOutil();
+window.addEventListener('hashchange', () => route(false));
+route(true);
+</script>
+</body>
+</html>
