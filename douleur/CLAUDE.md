@@ -112,13 +112,13 @@ jsdom ne voit ni la mise en page, ni le défilement, ni les bugs de rendu Androi
 
 Faite sur la nouvelle adresse seulement ; l'ancienne reste telle quelle, ce qui autorise les essais. Décisions d'Arthur :
 
-- Couleurs de la charte (variables ). « Je vais bien » : texte marine.
-- Échelle de 1 à 10 : rouge EMIA de plus en plus intense (constante ), chiffre marine puis blanc pour 9 et 10.
-- Emojis : dessins Noto (Android) embarqués en SVG (, , attribut ), licence Apache 2.0, citée dans les Paramètres. Les deux PNG d'Arthur sont inchangés.
-- **Écart à la charte assumé** : la police côté personne est Nunito (titres en Montserrat), alors que la charte prévoit Arial pour les supports CAA et FALC. Pour essayer Arial, changer  en une ligne.
+- Couleurs de la charte (variables `--emia-…`). « Je vais bien » : texte marine.
+- Échelle de 1 à 10 : rouge EMIA de plus en plus intense (constante `ECHELLE`), chiffre marine puis blanc pour 9 et 10.
+- Emojis : dessins Noto (Android) embarqués en SVG (`EMOJIS`, `emo()`, attribut `data-emo`), licence Apache 2.0, citée dans les Paramètres. Les deux PNG d'Arthur sont inchangés.
+- **Écart à la charte assumé** : la police côté personne est Nunito (titres en Montserrat), alors que la charte prévoit Arial pour les supports CAA et FALC. Pour essayer Arial, changer `--police-personne` en une ligne.
 - **Écart à la charte assumé** : petite fleur sur l'accueil de l'outil, côté personne.
-- Polices et logos embarqués en base64, sauf les logos partenaires des Paramètres (). Plus de Google Fonts.
+- Polices et logos embarqués en base64, sauf les logos partenaires des Paramètres (`../logos/`). Plus de Google Fonts.
 - « Vider le journal » : confirmation dans la carte, sans fenêtre par-dessus (voir §5), « Garder le journal » ayant le focus.
-- Hauteurs inférieures à 600 px : accueil resserré ().
+- Hauteurs inférieures à 600 px : accueil resserré (`@media (max-height:600px)`).
 
 Restent ouverts : le message sur l'ancienne adresse (rien pour l'instant), le code PIN mort à nettoyer, l'avis de Géraldine Deniard quand les essais auront avancé.
