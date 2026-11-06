@@ -138,21 +138,48 @@ details.repli[open] summary::before{transform:rotate(45deg)}
 .note .date{color:var(--emia-gris-texte);font-size:15px;margin:0 0 6px}
 
 /* Pied de page */
-.pied{background:var(--emia-fond-clair);border-top:1px solid var(--emia-filet);font-size:15px;color:var(--emia-gris-texte)}
-.pied-ligne{max-width:980px;margin:0 auto;padding:18px 16px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 24px}
-.partenaires{display:flex;flex-wrap:wrap;align-items:center;gap:12px 24px;padding:10px 14px;border-radius:var(--emia-rayon);background:#fff}
-.partenaires img:first-child{width:104px;height:auto}
-.partenaires img:last-child{width:120px;height:auto}
-.pied-texte{display:flex;flex-direction:column;gap:2px;flex:1 1 300px;max-width:520px}
-.pied a{color:var(--emia-marine)}
-.pied a.version{display:inline-flex;align-items:center;min-height:32px}
+.pied{background:var(--emia-fond);border-top:1px solid var(--emia-filet);font-size:13px;line-height:1.4;color:var(--emia-gris-texte)}
+.pied-ligne{max-width:1180px;margin:0 auto;padding:6px 16px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:4px 20px}
+.partenaires{display:flex;align-items:center;gap:14px}
+.partenaires img:first-child{height:24px;width:auto}
+.partenaires img:last-child{height:18px;width:auto}
+.pied-texte{display:flex;flex-wrap:wrap;align-items:center;gap:0 14px}
+.pied a{color:var(--emia-gris-texte)}
+
+/* L'accueil tient sur un écran, sans défilement */
+body[data-page="accueil"] main{max-width:1100px;padding:12px 16px}
+.heros{max-width:860px;margin:0 auto 18px;text-align:center}
+.heros>img{width:96px;height:96px;margin:0 auto 8px}
+.heros .lecture{margin-bottom:10px}
+.heros .lecture p{margin-bottom:6px}
+.heros .bouton{min-height:44px;padding:8px 22px}
+.modules{gap:16px}
+.module{display:grid;grid-template-columns:48px 1fr;grid-template-areas:"pastille titre" "pastille etat" "desc desc";column-gap:12px;row-gap:2px;align-items:center;align-content:start;min-height:0;padding:14px 16px}
+.module .pastille{grid-area:pastille}
+.module b{grid-area:titre;font-size:18px}
+.module .etiquette{grid-area:etat;position:static;justify-self:start;padding:1px 10px;font-size:12px}
+.module:not(:has(.etiquette)) b{grid-area:1 / 2 / 3 / 3}
+.module span.desc{grid-area:desc;margin-top:6px;line-height:1.35}
 
 @media (max-width:760px){
   main{padding-top:24px}
-  .modules,.temps{grid-template-columns:1fr}
-  .module{min-height:0}
-  .heros>img{width:120px;height:120px}
+  .temps{grid-template-columns:1fr}
   h1{font-size:28px}
+  /* Téléphone : l'essentiel d'abord, le détail reste sur la page EMIA et dans chaque module. */
+  .modules{grid-template-columns:1fr;gap:8px}
+  .heros{margin-bottom:12px}
+  .heros>img{width:64px;height:64px;margin-bottom:4px}
+  .heros .lecture p{line-height:1.4}
+  .heros .lecture p+p{display:none}
+  .module{grid-template-columns:40px 1fr;padding:8px 12px;grid-template-areas:"pastille titre" "pastille etat"}
+  .module .pastille{width:40px;height:40px}
+  .module .pastille svg{width:22px;height:22px}
+  .module b{font-size:17px}
+  .module span.desc{display:none}
+  .pied{font-size:12px}
+  .pied-ligne{justify-content:center;text-align:center;padding:4px 16px;gap:2px 20px}
+  .pied-texte{justify-content:center;gap:0 10px}
+  .pied-texte span:nth-child(2){order:-1;flex-basis:100%}
 }
 @media (max-width:420px){
   .entete-ligne{padding:8px 16px;gap:10px}
@@ -298,7 +325,7 @@ details.repli[open] summary::before{transform:rotate(45deg)}
     </div>
     <div class="pied-texte">
       <span>Créé par l'EMIA35</span>
-      <span>Outil en construction : vos remarques et retours sont les bienvenus à <a href="mailto:emia35@adapei35.asso.fr">emia35@adapei35.asso.fr</a></span>
+      <span>Outil en construction, vos retours : <a href="mailto:emia35@adapei35.asso.fr">emia35@adapei35.asso.fr</a></span>
       <a class="version" href="#notes"><span id="version"></span>&nbsp;· Notes de version</a>
     </div>
   </div>
@@ -347,6 +374,12 @@ const OUTILS = [
 
 /* Les notes de version, la plus récente en premier. La première donne le numéro du pied de page. */
 const NOTES_VERSION = [
+  {
+    version: 'v2026.11.06-4',
+    date: '6 novembre 2026',
+    titre: "Un accueil plus compact",
+    texte: "Le pied de page est plus discret et la page d'accueil tient sur un écran."
+  },
   {
     version: 'v2026.11.06-3',
     date: '6 novembre 2026',
@@ -407,6 +440,7 @@ function route(premierAffichage) {
   const pages = [...document.querySelectorAll('[data-page]')];
   const page = pages.find(p => p.dataset.page === voulue) || pages[0];
   pages.forEach(p => { p.hidden = p !== page; });
+  document.body.dataset.page = page.dataset.page;
   document.title = page.dataset.page === 'accueil' ? page.dataset.titre : page.dataset.titre + ' · Le HUB de l\'EMIA35';
   if (!premierAffichage) {
     window.scrollTo(0, 0);
