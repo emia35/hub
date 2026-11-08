@@ -62,7 +62,7 @@ img,svg{display:block}
 .lettres b:nth-child(5){color:var(--emia-cyan)}
 .lettres b:nth-child(6){color:var(--emia-vert)}
 .logo-emia{flex-shrink:0}
-.logo-emia img{width:128px;height:auto}
+.logo-emia img{width:128px;height:auto;aspect-ratio:1272/347}
 .barre{height:4px;background:linear-gradient(90deg,
   var(--emia-orange) 0 16.66%,var(--emia-rouge) 0 33.33%,var(--emia-violet) 0 50%,
   var(--emia-bleu) 0 66.66%,var(--emia-cyan) 0 83.33%,var(--emia-vert) 0)}
@@ -341,6 +341,11 @@ section.page-roue{flex:1;min-width:0;display:flex;overflow:hidden}
   .etape-cote h1{margin-bottom:6px}
   .etape-resume{font-size:16px;margin-bottom:10px}
   .etape-panneau h2{font-size:20px}
+}
+@media (min-width:761px) and (max-height:620px){
+  .etape-cote h1{font-size:20px}
+  .etape-bloc p{font-size:14px;line-height:1.4}
+  .etape-resume{font-size:15px}
 }
 .etape-bloc h3{margin:0 0 2px;font:700 15px var(--emia-police-titre)}
 .etape-bloc p{margin:0;font-size:15px;line-height:1.45;text-align:justify;text-justify:inter-word;hyphens:auto}
@@ -1031,6 +1036,12 @@ const ACTUS = [
 /* Les notes de version, la plus récente en premier. La première donne le numéro du pied de page. */
 const NOTES_VERSION = [
   {
+    version: 'v2026.11.08-8',
+    date: '8 novembre 2026',
+    titre: "Correctif de la roue",
+    texte: "Sur les écrans peu hauts, le haut du texte de la roue ne passe plus sous l'en-tête."
+  },
+  {
     version: 'v2026.11.08-7',
     date: '8 novembre 2026',
     titre: "La roue se lit sans défiler",
@@ -1447,7 +1458,9 @@ function creerRoue(o) {
       Object.assign(svg.style, { width: 200 * u + 'px', height: 200 * u + 'px', left: (W / 2 - 100 * u) + 'px', top: (-22 * u - 100 * u) + 'px' });
     } else {
       const dispo = window.innerHeight - document.querySelector('.entete').offsetHeight - document.querySelector('.pied').offsetHeight;
-      const H = Math.max(520, dispo);
+      /* Exactement la hauteur disponible : un seul pixel de trop ferait défiler la page,
+         et le haut du texte passerait sous l'en-tête, qui reste fixé en haut. */
+      const H = Math.max(360, Math.floor(dispo));
       section.style.height = H + 'px';
       /* La roue ne prend jamais plus d'un tiers de la largeur, pour laisser au texte la place de tenir sans défiler. */
       u = Math.min(Math.min(H, 820) / 100, window.innerWidth * 0.34 / 72);
@@ -1518,6 +1531,14 @@ function creerRoue(o) {
     depart = null;
   });
   window.addEventListener('resize', () => { if (document.body.dataset.vue === o.vue) R.placer(); });
+
+  /* Si l'en-tête ou le pied changent de hauteur (logos, polices chargés après coup), on se recale. */
+  if ('ResizeObserver' in window) {
+    const obs = new ResizeObserver(() => { if (document.body.dataset.vue === o.vue) R.placer(); });
+    obs.observe(document.querySelector('.entete'));
+    obs.observe(document.querySelector('.pied'));
+  }
+  window.addEventListener('load', () => { if (document.body.dataset.vue === o.vue) R.placer(); });
 
   R.afficher(false);
   ROUES[o.vue] = R;
