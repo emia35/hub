@@ -10,6 +10,7 @@ Public : professionnels et familles. Registre partenaires de la charte (vouvoiem
 `douleur/` : l'outil « Comment je me sens ? », fichier autonome, avec son contexte complet (`douleur/CLAUDE.md`, à lire avant d'y toucher : pièges Android, choix cliniques) et ses tests (`npm test`, jsdom).
 `logos/`, `polices/` : copies du kit de la charte (polices réduites au latin, en woff2 ; logos non modifiés).
 `actus/` : les images des actus. `equipe/` : les photos de l'équipe (sans métadonnées, avec accord écrit).
+`documents/` : documents publics à ouvrir depuis le hub (aujourd'hui l'exemple fictif de bilan, « Nora », 24 pages, marqué « exemple fictif » à chaque page).
 Non publiés (`.gitignore`) : `A lire/` (documents de travail d'Arthur : formulaires, présentations, trombinoscope Word avec photos, à ne jamais publier), `sources/`, `passation_claude_code_EMIA35/`, `Comment je me sens/`.
 
 ## Les pages
@@ -20,6 +21,7 @@ Non publiés (`.gitignore`) : `A lire/` (documents de travail d'Arthur : formula
 | `#emia` | Présentation de l'EMIA35, liens vers l'équipe et l'arbre. |
 | `#equipe` | Trombinoscope : métiers par groupe, photo et nom seulement avec accord écrit. |
 | `#processus` | Roue du processus d'intervention, six étapes. |
+| `#bilan-exemple` | À quoi ressemble un bilan : les parties du bilan fictif de Nora, un extrait par partie, le PDF complet. Reliée depuis l'étape 5 et la page EMIA. |
 | `#orientation` | Arbre « L'EMIA peut-elle vous aider ? ». |
 | `#reperes` | Sommaire vers `#repere-autisme`, `#repere-comportements`, `#repere-galaxie` (roue), `#repere-lexique`. |
 | `#ressources` | Les outils (BAF, Comment je me sens). |
@@ -62,4 +64,4 @@ Actus : on écrit le texte dans le hub, le post LinkedIn renvoie vers `#actu-<id
 Arbre : les interlocuteurs cités (CRA, CMP, MDPH, SAMSAH, PCPE), « l'EMIA ne pose pas de diagnostic », le seuil de la question 4 (« quotidien très difficile »), le ton des titres.
 Repères : la galaxie (MAS retirée du sanitaire, UEDE 35 et ADITSA non développés), la phrase « un comportement-défi est souvent une tentative de répondre à un besoin », les définitions du lexique.
 Équipe : la liste des métiers (neuropsychologue, cadre de santé, « assistant social »).
-À venir : un exemple de bilan d'intervention fictif (Arthur le prépare), à relier à l'étape 5 de la roue.
+Exemple de bilan : la page reprend des extraits du PDF d'Arthur ; si le bilan fictif change, mettre à jour les extraits de `#bilan-exemple`.

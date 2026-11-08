@@ -163,6 +163,25 @@ section[data-page="accueil"]{flex:1;min-width:0;display:flex;flex-direction:colu
 .module:not(:has(.etiquette)) b{grid-area:1 / 2 / 3 / 3}
 .module span.desc{grid-area:desc;margin-top:6px;line-height:1.35}
 
+/* Exemple de bilan */
+.bandeau-fictif{margin:0 0 16px;padding:12px 16px;border:var(--emia-bordure) solid var(--emia-rouge);border-radius:var(--emia-rayon);background:var(--emia-rouge-pastel)}
+.bandeau-fictif b{color:var(--emia-rouge-texte)}
+.parties-bilan{display:grid;gap:14px;margin:18px 0}
+.partie-bilan{display:grid;grid-template-columns:56px 1fr;border:var(--emia-bordure) solid;border-radius:var(--emia-rayon);overflow:hidden}
+.partie-bilan>span{display:flex;align-items:flex-start;justify-content:center;padding-top:16px;font:700 22px var(--emia-police-titre)}
+.partie-bilan>div{padding:14px 18px}
+.partie-bilan h2{margin:0 0 6px;font-size:19px}
+.partie-bilan p{margin:0 0 10px;text-align:justify;text-justify:inter-word;hyphens:auto}
+.partie-bilan blockquote{margin:0;padding:10px 14px;border-radius:8px;background:#fff;font-style:italic}
+.partie-bilan blockquote small{display:block;margin-bottom:4px;font:600 13px var(--emia-police-titre);font-style:normal;color:var(--emia-gris-texte)}
+.partie-bilan.cyan{border-color:var(--emia-cyan);background:var(--emia-cyan-pastel)}.partie-bilan.cyan>span{background:var(--emia-cyan);color:var(--emia-marine)}
+.partie-bilan.orange{border-color:var(--emia-orange);background:var(--emia-orange-pastel)}.partie-bilan.orange>span{background:var(--emia-orange);color:var(--emia-marine)}
+.partie-bilan.violet{border-color:var(--emia-violet);background:var(--emia-violet-pastel)}.partie-bilan.violet>span{background:var(--emia-violet);color:#fff}
+.partie-bilan.bleu{border-color:var(--emia-bleu);background:var(--emia-bleu-pastel)}.partie-bilan.bleu>span{background:var(--emia-bleu);color:#fff}
+.partie-bilan.vert{border-color:var(--emia-vert);background:var(--emia-vert-pastel)}.partie-bilan.vert>span{background:var(--emia-vert);color:var(--emia-marine)}
+.partie-bilan.gris{border-color:var(--emia-filet);background:var(--emia-fond-clair)}.partie-bilan.gris>span{background:var(--emia-filet);color:var(--emia-marine)}
+@media (max-width:760px){.partie-bilan{grid-template-columns:40px 1fr}.partie-bilan>span{font-size:18px}.partie-bilan>div{padding:12px 14px}}
+
 /* L'arbre « L'EMIA peut-elle vous aider ? » */
 .page.page-arbre{max-width:720px}
 .arbre-carte{transition:opacity .2s ease,transform .2s ease}
@@ -445,6 +464,7 @@ section.page-roue{flex:1;min-width:0;display:flex;overflow:hidden}
       <div class="carte violet">
         <h3><span class="numero">1</span>Prendre la mesure</h3>
         <div class="lecture"><p>On l'appelle d'ordinaire « évaluation », mais nous ne sommes pas là pour noter : nous sommes là pour comprendre. Observations sur les lieux de vie, évaluations de la communication ou de la sensorialité, entretiens avec la personne, sa famille, les équipes : ce temps est construit sur mesure. Il aboutit à un bilan d'intervention et à des préconisations.</p></div>
+        <a class="bouton leger" href="#bilan-exemple">Voir un exemple de bilan</a>
       </div>
       <div class="carte cyan">
         <h3><span class="numero">2</span>Accompagner les préconisations</h3>
@@ -593,6 +613,57 @@ section.page-roue{flex:1;min-width:0;display:flex;overflow:hidden}
     <h1 tabindex="-1">Ressources</h1>
     <p class="sous-titre">La boîte à outils de l'EMIA35.</p>
     <div class="outils" id="liste-outils"></div>
+  </section>
+
+  <section class="page page-large" data-page="bilan-exemple" data-titre="À quoi ressemble un bilan d'intervention ?" hidden>
+    <a class="lien-retour" href="#processus">← Revenir au processus d'intervention</a>
+    <h1 tabindex="-1">À quoi ressemble un bilan d'intervention ?</h1>
+    <p class="bandeau-fictif"><b>Exemple fictif.</b> Nora n'existe pas. Son histoire a été inventée pour vous montrer ce que contient un bilan de l'EMIA35 et la façon dont nous l'écrivons. Elle ne reprend la situation d'aucune personne réelle.</p>
+    <div class="lecture">
+      <p>À la fin de l'évaluation, nous vous présentons, en réunion, un bilan d'intervention. Il dit ce que nous avons compris de la situation, et ce que nous proposons. C'est une photographie à un moment donné, pas une vérité définitive : les préconisations sont des pistes à mettre au travail ensemble, pendant le suivi.</p>
+      <p>Voici comment il se lit, à partir de l'exemple de Nora, 21 ans, accueillie dans un institut médico-éducatif.</p>
+    </div>
+    <div class="actions-actu">
+      <a class="bouton" href="documents/EMIA35_Exemple-fictif_Bilan-intervention.pdf" target="_blank" rel="noopener">Ouvrir l'exemple complet (PDF, 24 pages)</a>
+    </div>
+
+    <div class="parties-bilan">
+      <div class="partie-bilan cyan"><span>!</span><div>
+        <h2>L'essentiel en une page</h2>
+        <p>Pour ceux qui ont peu de temps : pourquoi nous sommes intervenus, ce que nous avons compris, ce dont la personne a besoin, et nos préconisations prioritaires.</p>
+        <blockquote><small>Dans le bilan de Nora</small>Nora comprend beaucoup mieux ce qu'elle voit que ce qu'on lui dit, et une chose à la fois. Quand un changement arrive sans qu'elle ait pu le voir venir, elle perd ses repères : ses comportements lui servent alors à dire « stop ».</blockquote>
+      </div></div>
+      <div class="partie-bilan orange"><span>I</span><div>
+        <h2>La situation</h2>
+        <p>Qui est la personne : ce qu'elle aime, comment elle communique, son parcours. Puis la demande qui nous a été adressée, telle qu'elle a été écrite, et telle que nous l'avons entendue au fil des rencontres.</p>
+        <blockquote><small>Dans le bilan de Nora</small>Celles et ceux qui la connaissent parlent d'abord de son rire, qui éclate dans les moments de musique et lorsqu'elle se balance dans le jardin de l'IME.</blockquote>
+      </div></div>
+      <div class="partie-bilan violet"><span>II</span><div>
+        <h2>Ce que nous avons compris</h2>
+        <p>Les évaluations conduites et ce qu'elles nous apprennent : la communication, les particularités sensorielles, le fonctionnement psychique, la santé. Puis les comportements-défis et ce à quoi ils servent pour la personne, sous forme d'hypothèses, de la plus à la moins solide.</p>
+        <blockquote><small>Dans le bilan de Nora</small>Les comportements de Nora disent le plus souvent « stop, c'est trop », parfois « j'ai mal », parfois « je ne sais pas quoi faire de moi ».</blockquote>
+      </div></div>
+      <div class="partie-bilan bleu"><span>III</span><div>
+        <h2>Nos préconisations</h2>
+        <p>Un plan d'actions qui dit par où commencer, qui porte chaque action et à partir de quand. Puis une fiche par thème : pourquoi c'est important pour la personne, ce que l'on vise, et les moyens concrets d'y parvenir.</p>
+        <blockquote><small>Dans le bilan de Nora</small>Deux photos seulement à la fois, sur le modèle « maintenant, puis après » : l'activité en cours en haut, la suivante juste en dessous.</blockquote>
+      </div></div>
+      <div class="partie-bilan vert"><span>IV</span><div>
+        <h2>La suite</h2>
+        <p>Les rendez-vous du suivi des préconisations, pendant six mois, jusqu'à la fin de l'intervention.</p>
+        <blockquote><small>Dans le bilan de Nora</small>Certaines tiendront telles quelles, d'autres demanderont à être affinées par essais successifs, et c'est ce travail d'ajustement qui leur donne leur valeur.</blockquote>
+      </div></div>
+      <div class="partie-bilan gris"><span>A</span><div>
+        <h2>Les annexes</h2>
+        <p>La chronologie de l'intervention, les résultats complets des évaluations, les principes qui guident notre accompagnement, et une version facile à lire, écrite pour la personne elle-même.</p>
+        <blockquote><small>Dans le bilan de Nora, la version facile à lire</small>Nora, nous sommes l'EMIA35. Nous sommes venus te voir à l'IME et à la maison, au printemps et en été. Tu gardes tes clés avec toi, tout le temps.</blockquote>
+      </div></div>
+    </div>
+
+    <div class="actions-actu">
+      <a class="bouton" href="documents/EMIA35_Exemple-fictif_Bilan-intervention.pdf" target="_blank" rel="noopener">Ouvrir l'exemple complet (PDF, 24 pages)</a>
+      <a class="bouton leger" href="#processus">Revoir les étapes de l'intervention</a>
+    </div>
   </section>
 
   <section class="page page-arbre" data-page="orientation" data-titre="L'EMIA peut-elle vous aider ?" hidden>
@@ -950,6 +1021,12 @@ const ACTUS = [
 /* Les notes de version, la plus récente en premier. La première donne le numéro du pied de page. */
 const NOTES_VERSION = [
   {
+    version: 'v2026.11.08-6',
+    date: '8 novembre 2026',
+    titre: "Un exemple de bilan d'intervention",
+    texte: "À partir de l'histoire fictive de Nora, une page montre comment se lit un bilan d'intervention de l'EMIA35, partie par partie, avec l'exemple complet à ouvrir en PDF. Accessible depuis l'étape 5 du processus et la présentation de l'EMIA."
+  },
+  {
     version: 'v2026.11.08-5',
     date: '8 novembre 2026',
     titre: "Les repères",
@@ -1206,7 +1283,8 @@ const ETAPES = [
       ["Le bilan d'intervention", "Il retrace en toute transparence les étapes de l'intervention et l'analyse de l'équipe, pour aider chacun à comprendre le fonctionnement de la personne. C'est une photographie à un moment donné, pas une vérité définitive."],
       ["Sa présentation", "En réunion, avec la personne, son entourage et les partenaires : la démarche, les préconisations, et la façon dont le suivi s'organisera."],
       ["Bon à savoir", "L'écriture prend du temps. Il est possible que nous venions moins vous voir pendant cette période, mais nous restons disponibles."]
-    ]
+    ],
+    lien: ["À quoi ressemble un bilan ? Voir un exemple", "#bilan-exemple"]
   },
   {
     couleur: "vert", degrade: ["#5DC766", "#73BD47"], texte: "#043471", icone: "liste",
