@@ -163,6 +163,37 @@ section[data-page="accueil"]{flex:1;min-width:0;display:flex;flex-direction:colu
 .module:not(:has(.etiquette)) b{grid-area:1 / 2 / 3 / 3}
 .module span.desc{grid-area:desc;margin-top:6px;line-height:1.35}
 
+/* L'arbre « L'EMIA peut-elle vous aider ? » */
+.page.page-arbre{max-width:720px}
+.arbre-carte{transition:opacity .2s ease,transform .2s ease}
+.arbre-carte.sortie{opacity:0;transform:translateY(6px)}
+.arbre-progression{display:flex;align-items:center;gap:6px;margin:4px 0 10px;color:var(--emia-gris-texte);font-size:14px}
+.arbre-progression i{width:22px;height:6px;border-radius:3px;background:var(--emia-filet)}
+.arbre-progression i.fait{background:var(--emia-marine)}
+.arbre-question{margin:0 0 6px;font-size:23px}
+.arbre-aide{margin:0 0 14px;color:var(--emia-gris-texte)}
+.arbre-choix{display:grid;gap:10px;margin-bottom:14px}
+.arbre-choix button{display:block;width:100%;min-height:56px;padding:12px 18px;border:var(--emia-bordure) solid;border-radius:var(--emia-rayon);text-align:left;cursor:pointer;font:600 17px/1.35 var(--emia-police-texte);color:var(--emia-marine)}
+.arbre-choix button small{display:block;font-weight:400;font-size:15px;color:var(--emia-gris-texte);margin-top:2px}
+.arbre-choix button:hover{filter:brightness(.97)}
+.arbre-choix.orange button{background:var(--emia-orange-pastel);border-color:var(--emia-orange)}
+.arbre-choix.rouge button{background:var(--emia-rouge-pastel);border-color:var(--emia-rouge)}
+.arbre-choix.violet button{background:var(--emia-violet-pastel);border-color:var(--emia-violet)}
+.arbre-choix.bleu button{background:var(--emia-bleu-pastel);border-color:var(--emia-bleu)}
+.arbre-choix.cyan button{background:var(--emia-cyan-pastel);border-color:var(--emia-cyan)}
+.arbre-resultat{padding:18px 20px;border-radius:var(--emia-rayon);border:var(--emia-bordure) solid;margin-bottom:14px}
+.arbre-resultat.oui{background:var(--emia-vert-pastel);border-color:var(--emia-vert)}
+.arbre-resultat.peut-etre{background:var(--emia-orange-pastel);border-color:var(--emia-orange)}
+.arbre-resultat.non{background:var(--emia-bleu-pastel);border-color:var(--emia-bleu)}
+.arbre-resultat h2{margin:0 0 8px;font-size:22px}
+.arbre-resultat p{margin:0 0 8px;text-align:justify;text-justify:inter-word;hyphens:auto}
+.arbre-resultat p:last-child{margin-bottom:0}
+.arbre-reponses{margin:0 0 14px;padding:10px 14px;border-radius:var(--emia-rayon);background:var(--emia-fond-clair);font-size:15px}
+.arbre-reponses b{display:block;font:700 14px var(--emia-police-titre);margin-bottom:4px}
+.arbre-reponses div{color:var(--emia-gris-texte)}
+.arbre-actions{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:12px}
+.arbre-urgence{margin-top:8px;font-size:14px;color:var(--emia-gris-texte)}
+
 /* L'équipe */
 .page.page-equipe{max-width:1040px}
 .groupe-equipe{margin-bottom:8px}
@@ -366,6 +397,7 @@ section[data-page="processus"]{flex:1;min-width:0;display:flex;overflow:hidden}
       <p>Nous intervenons auprès de personnes de plus de seize ans, autistes, avec un diagnostic posé ou fortement suspecté, dont les comportements, par leur intensité, leur fréquence ou leur durée, entraînent une souffrance, un risque de rupture de parcours, voire une mise en danger, pour elles-mêmes ou pour leur entourage.</p>
       <p>L'équipe peut être sollicitée par les familles, par les institutions, ou par les personnes elles-mêmes.</p>
     </div>
+    <a class="bouton leger" href="#orientation">L'EMIA peut-elle vous aider ? Faites le point</a>
 
     <h2>Qui sommes-nous ?</h2>
     <div class="lecture">
@@ -428,6 +460,14 @@ section[data-page="processus"]{flex:1;min-width:0;display:flex;overflow:hidden}
     <h1 tabindex="-1">Ressources</h1>
     <p class="sous-titre">La boîte à outils de l'EMIA35.</p>
     <div class="outils" id="liste-outils"></div>
+  </section>
+
+  <section class="page page-arbre" data-page="orientation" data-titre="L'EMIA peut-elle vous aider ?" hidden>
+    <a class="lien-retour" href="#accueil">← Revenir à l'accueil</a>
+    <h1 tabindex="-1">L'EMIA peut-elle vous aider ?</h1>
+    <p class="sous-titre">Quelques questions pour savoir si une demande à l'EMIA est adaptée à votre situation. Rien n'est enregistré.</p>
+    <div class="arbre-carte" id="arbre-carte" aria-live="polite"></div>
+    <p class="arbre-urgence">En cas de danger immédiat, appelez le 15 ou le 112. L'EMIA n'intervient pas en urgence.</p>
   </section>
 
   <section class="page page-equipe" data-page="equipe" data-titre="L'équipe" hidden>
@@ -517,6 +557,192 @@ const OUTILS = [
   }
 ];
 
+/* L'arbre « L'EMIA peut-elle vous aider ? ».
+   Critères : plaquette, processus de la demande, formulaire de demande (échelle de gravité).
+   C'est une orientation, jamais une décision : l'équipe étudie chaque demande.
+   Chaque choix mène à une autre question (suite: "q…") ou à un résultat (suite: "r…"). */
+const ARBRE = {
+  q1: {
+    couleur: "orange",
+    question: "La personne concernée a-t-elle 16 ans ou plus ?",
+    choix: [
+      { texte: "Oui", suite: "q2" },
+      { texte: "Non, elle a moins de 16 ans", suite: "rAge" }
+    ]
+  },
+  q2: {
+    couleur: "rouge",
+    question: "Un diagnostic d'autisme a-t-il été posé ?",
+    aide: "On parle aussi de trouble du spectre de l'autisme (TSA).",
+    choix: [
+      { texte: "Oui", suite: "q3" },
+      { texte: "Pas encore, mais il est fortement suspecté", suite: "q3" },
+      { texte: "Non, et ce n'est pas envisagé", suite: "rDiagnostic" }
+    ]
+  },
+  q3: {
+    couleur: "violet",
+    question: "La personne a-t-elle des comportements qui posent problème ?",
+    aide: "Par exemple : se faire mal, frapper, casser, crier, s'enfuir, refuser de manger. On parle de comportements-défis.",
+    choix: [
+      { texte: "Oui", suite: "q4" },
+      { texte: "Non", suite: "rComportement" }
+    ]
+  },
+  q4: {
+    couleur: "bleu",
+    question: "Aujourd'hui, quelles sont les conséquences de ces comportements ?",
+    aide: "Choisissez ce qui correspond le mieux, pour la personne ou pour son entourage.",
+    choix: [
+      { texte: "Ils gênent, mais le quotidien reste possible", suite: "rGravite" },
+      { texte: "Ils rendent le quotidien très difficile", aide: "Pour la personne, sa famille ou les équipes qui l'accompagnent.", suite: "q5" },
+      { texte: "Ils menacent le lieu de vie ou l'accompagnement", aide: "Exclusion, hospitalisation, arrêt d'une prise en charge : on parle de risque de rupture de parcours.", suite: "q5" },
+      { texte: "Ils mettent en danger la personne ou son entourage", suite: "q5" }
+    ]
+  },
+  q5: {
+    couleur: "cyan",
+    question: "Qu'attendez-vous de l'EMIA ?",
+    choix: [
+      { texte: "Comprendre ce qui se passe, et trouver des pistes pour agir", suite: "rOui" },
+      { texte: "Un accompagnement au quotidien, éducatif par exemple", suite: "rAccompagnement" },
+      { texte: "Une place d'accueil ou d'hébergement", suite: "rAccueil" },
+      { texte: "Un diagnostic d'autisme", suite: "rDiagnosticDemande" },
+      { texte: "Une aide tout de suite, en urgence", suite: "rUrgence" }
+    ]
+  }
+};
+
+const RESULTATS = {
+  rOui: {
+    ton: "oui",
+    titre: "Une demande à l'EMIA semble adaptée",
+    textes: [
+      "D'après vos réponses, la situation correspond aux critères d'intervention de l'EMIA.",
+      "Appelez-nous au 02 99 78 01 45, du lundi au vendredi de 8h30 à 16h30, ou écrivez à emia35@adapei35.asso.fr. Une coordinatrice vous recontacte sous 48 heures.",
+      "Ce résultat est une première orientation : c'est l'équipe qui étudie chaque demande, en réunion, avant de décider d'intervenir."
+    ],
+    lien: ["Voir comment se déroule une intervention", "#processus"]
+  },
+  rGravite: {
+    ton: "peut-etre",
+    titre: "Parlons-en ensemble",
+    textes: [
+      "L'EMIA intervient lorsque les comportements entraînent une souffrance, un risque de rupture de parcours, voire une mise en danger.",
+      "Si le quotidien reste possible, les professionnels qui accompagnent déjà la personne, les missions d'appui ou des professionnels libéraux sont souvent les mieux placés. Si la situation s'aggrave, ou si vous hésitez, contactez-nous : nous en parlerons ensemble."
+    ]
+  },
+  rAge: {
+    ton: "non",
+    titre: "L'EMIA n'est sans doute pas la bonne porte",
+    textes: [
+      "L'EMIA intervient auprès de personnes de 16 ans et plus.",
+      "Le Centre Ressources Autisme peut vous orienter vers les dispositifs adaptés à l'âge de la personne."
+    ]
+  },
+  rDiagnostic: {
+    ton: "non",
+    titre: "L'EMIA n'est sans doute pas la bonne porte",
+    textes: [
+      "L'EMIA intervient auprès de personnes autistes, avec un diagnostic posé ou fortement suspecté.",
+      "Le médecin traitant ou le centre médico-psychologique (CMP) sont les premiers interlocuteurs pour comprendre ce qui se passe."
+    ]
+  },
+  rComportement: {
+    ton: "non",
+    titre: "L'EMIA n'est sans doute pas la bonne porte",
+    textes: [
+      "L'EMIA intervient lorsque la personne présente des comportements-défis.",
+      "Pour d'autres questions liées à l'autisme, le Centre Ressources Autisme et les missions d'appui peuvent vous informer et vous orienter."
+    ]
+  },
+  rAccompagnement: {
+    ton: "non",
+    titre: "L'EMIA n'est sans doute pas la bonne porte",
+    textes: [
+      "L'EMIA est une équipe d'évaluation : elle aide à comprendre la situation et propose des pistes, mais elle ne se substitue pas aux familles ni aux équipes d'accompagnement ou de soins.",
+      "Pour un accompagnement au quotidien, la Maison départementale des personnes handicapées (MDPH) peut ouvrir des droits, et des services comme les SAMSAH ou les PCPE peuvent accompagner la personne.",
+      "Si des comportements-défis rendent cet accompagnement difficile, une demande à l'EMIA peut avoir du sens en plus : contactez-nous."
+    ]
+  },
+  rAccueil: {
+    ton: "non",
+    titre: "L'EMIA n'est sans doute pas la bonne porte",
+    textes: [
+      "L'EMIA n'attribue pas de place d'accueil ou d'hébergement.",
+      "Les demandes d'orientation vers un établissement passent par la Maison départementale des personnes handicapées (MDPH)."
+    ]
+  },
+  rDiagnosticDemande: {
+    ton: "non",
+    titre: "L'EMIA n'est sans doute pas la bonne porte",
+    textes: [
+      "L'EMIA ne pose pas de diagnostic d'autisme.",
+      "Le Centre Ressources Autisme, le centre médico-psychologique (CMP) ou un psychiatre peuvent engager une démarche de diagnostic."
+    ]
+  },
+  rUrgence: {
+    ton: "non",
+    titre: "L'EMIA n'intervient pas en urgence",
+    textes: [
+      "En cas de danger immédiat, appelez le 15 (SAMU) ou le 112.",
+      "Une intervention de l'EMIA demande du temps : la demande est étudiée en équipe, puis la situation peut être inscrite sur liste d'attente. Une fois la crise passée, contactez-nous pour en parler."
+    ]
+  }
+};
+
+const ARBRE_ETAT = { chemin: [] };   /* [{ q: "q1", choix: 0 }, …] */
+
+function arbreQuestionCourante() {
+  if (!ARBRE_ETAT.chemin.length) return 'q1';
+  const der = ARBRE_ETAT.chemin[ARBRE_ETAT.chemin.length - 1];
+  return ARBRE[der.q].choix[der.choix].suite;
+}
+
+function afficherArbre(avecTransition) {
+  const carte = document.getElementById('arbre-carte');
+  const id = arbreQuestionCourante();
+  const nbQuestions = Object.keys(ARBRE).length;
+  const remplir = () => {
+    if (id.startsWith('q')) {
+      const q = ARBRE[id], n = ARBRE_ETAT.chemin.length + 1;
+      carte.innerHTML = `
+        <div class="arbre-progression">${Array.from({ length: nbQuestions }, (_, k) => `<i class="${k < n ? 'fait' : ''}"></i>`).join('')}<span>Question ${n} sur ${nbQuestions}</span></div>
+        <h2 class="arbre-question">${echapper(q.question)}</h2>
+        ${q.aide ? `<p class="arbre-aide">${echapper(q.aide)}</p>` : ''}
+        <div class="arbre-choix ${q.couleur}">${q.choix.map((c, k) => `<button type="button" data-k="${k}">${echapper(c.texte)}${c.aide ? `<small>${echapper(c.aide)}</small>` : ''}</button>`).join('')}</div>
+        ${ARBRE_ETAT.chemin.length ? '<div class="arbre-actions"><button class="bouton leger" type="button" id="arbre-retour">← Question précédente</button></div>' : ''}`;
+      carte.querySelectorAll('.arbre-choix button').forEach(b => b.addEventListener('click', () => {
+        ARBRE_ETAT.chemin.push({ q: id, choix: +b.dataset.k });
+        afficherArbre(true);
+      }));
+    } else {
+      const r = RESULTATS[id];
+      carte.innerHTML = `
+        <div class="arbre-resultat ${r.ton}">
+          <h2>${echapper(r.titre)}</h2>
+          ${r.textes.map(t => `<p>${echapper(t)}</p>`).join('')}
+        </div>
+        ${r.ton !== 'oui' ? '<p class="arbre-aide">En cas de doute, contactez-nous quand même : 02 99 78 01 45 ou emia35@adapei35.asso.fr.</p>' : ''}
+        <div class="arbre-reponses"><b>Vos réponses</b>${ARBRE_ETAT.chemin.map(p => `<div>${echapper(ARBRE[p.q].question)} <span style="color:var(--emia-marine)">${echapper(ARBRE[p.q].choix[p.choix].texte)}</span></div>`).join('')}</div>
+        <div class="arbre-actions">
+          ${r.lien ? `<a class="bouton" href="${echapper(r.lien[1])}">${echapper(r.lien[0])}</a>` : ''}
+          <button class="bouton leger" type="button" id="arbre-retour">← Modifier ma dernière réponse</button>
+          <button class="bouton leger" type="button" id="arbre-recommencer">Recommencer</button>
+        </div>`;
+      document.getElementById('arbre-recommencer').addEventListener('click', () => { ARBRE_ETAT.chemin = []; afficherArbre(true); });
+    }
+    const retour = document.getElementById('arbre-retour');
+    if (retour) retour.addEventListener('click', () => { ARBRE_ETAT.chemin.pop(); afficherArbre(true); });
+    carte.classList.remove('sortie');
+    if (avecTransition) { const t = carte.querySelector('h2'); if (t) { t.tabIndex = -1; t.focus({ preventScroll: true }); } }
+  };
+  if (avecTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    carte.classList.add('sortie');
+    setTimeout(remplir, 200);
+  } else remplir();
+}
+
 /* L'équipe, par groupe. Sans photo ni nom, une silhouette et le métier seuls.
    Ajouter une personne qui a donné son accord écrit : nom, et photo carrée dans equipe/. */
 const EQUIPE = [
@@ -590,6 +816,12 @@ const ACTUS = [
 
 /* Les notes de version, la plus récente en premier. La première donne le numéro du pied de page. */
 const NOTES_VERSION = [
+  {
+    version: 'v2026.11.08-4',
+    date: '8 novembre 2026',
+    titre: "L'EMIA peut-elle vous aider ?",
+    texte: "Quelques questions pour savoir si une demande à l'EMIA est adaptée, et vers qui se tourner sinon. Accessible depuis la présentation de l'EMIA et la première étape du processus d'intervention."
+  },
   {
     version: 'v2026.11.08-3',
     date: '8 novembre 2026',
@@ -789,7 +1021,8 @@ const ETAPES = [
       ["Qui peut nous solliciter ?", "La personne elle-même, sa famille ou son entourage, un établissement médico-social, un établissement de santé, un professionnel libéral."],
       ["Comment ?", "Par téléphone au 02 99 78 01 45, du lundi au vendredi de 8h30 à 16h30, ou par mail à emia35@adapei35.asso.fr. Une coordinatrice vous recontacte sous 48 heures et vous propose de remplir un formulaire de demande d'intervention."],
       ["Et ensuite ?", "La demande est présentée en réunion d'équipe. Si l'EMIA n'est pas la bonne porte, nous vous orientons vers le dispositif le plus adapté."]
-    ]
+    ],
+    lien: ["L'EMIA peut-elle vous aider ? Faites le point", "#orientation"]
   },
   {
     couleur: "rouge", degrade: ["#F65B2B", "#EE3D20"], texte: "#FFFFFF", icone: "loupe",
@@ -986,7 +1219,8 @@ function afficherEtape(avecTransition) {
       <span class="etape-pilule fond-${e.couleur}">Étape ${i + 1} sur ${ETAPES.length}</span>
       <h2>${echapper(e.titre)}</h2>
       <p class="etape-resume">${echapper(e.resume)}</p>
-      ${e.blocs.map(([t, x]) => `<div class="etape-bloc"><h3 class="texte-${e.couleur}">${echapper(t)}</h3><p>${echapper(x)}</p></div>`).join('')}`;
+      ${e.blocs.map(([t, x]) => `<div class="etape-bloc"><h3 class="texte-${e.couleur}">${echapper(t)}</h3><p>${echapper(x)}</p></div>`).join('')}
+      ${e.lien ? `<a class="bouton leger" href="${echapper(e.lien[1])}">${echapper(e.lien[0])}</a>` : ''}`;
     panneau.classList.remove('sortie');
   };
   if (avecTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -1003,6 +1237,7 @@ function afficherEtape(avecTransition) {
 }
 
 construireRoue();
+afficherArbre(false);
 afficherEquipe();
 afficherActus();
 afficherOutils();
