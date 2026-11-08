@@ -322,19 +322,29 @@ section.page-roue{flex:1;min-width:0;display:flex;overflow:hidden}
 .roue-zone svg{position:absolute;display:block;overflow:visible}
 .roue-zone .petale{cursor:pointer}
 .roue-zone text{font-family:var(--emia-police-titre);font-weight:700;text-anchor:middle;pointer-events:none}
-.etape-cote{flex:1;min-width:0;display:flex;flex-direction:column;padding:20px 32px 16px 28px;overflow-y:auto}
-.etape-cote .lien-retour{align-self:flex-start;margin-bottom:0}
-.etape-cote h1{font-size:26px}
-.etape-cote .sous-titre{margin:4px 0 14px}
-.etape-panneau{flex:1;max-width:680px;transition:opacity .25s ease,transform .25s ease}
+.etape-cote{flex:1;min-width:0;display:flex;flex-direction:column;padding:12px 28px 8px 24px;overflow-y:auto}
+.etape-cote .lien-retour{align-self:flex-start;margin-bottom:0;min-height:36px}
+.etape-cote h1{font-size:22px}
+.etape-cote .sous-titre{margin:2px 0 10px;font-size:15px}
+.etape-panneau{flex:1;max-width:920px;transition:opacity .25s ease,transform .25s ease}
 .etape-panneau.sortie{opacity:0;transform:translateY(8px)}
-.etape-pilule{display:inline-block;padding:3px 14px;border-radius:999px;font:600 14px/1.5 var(--emia-police-titre)}
-.etape-panneau h2{margin:8px 0 4px;font-size:24px}
-.etape-resume{margin:0 0 14px;font-size:18px;line-height:1.45}
-.etape-bloc{margin:0 0 12px}
+.etape-pilule{display:inline-block;padding:2px 12px;border-radius:999px;font:600 13px/1.5 var(--emia-police-titre)}
+.etape-panneau h2{margin:6px 0 2px;font-size:22px}
+.etape-resume{margin:0 0 12px;font-size:17px;line-height:1.4}
+/* Les rubriques d'une étape côte à côte, pour que tout se lise sans défiler */
+.etape-blocs{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px 22px;margin-bottom:10px}
+.etape-entete{display:flex;flex-wrap:wrap;align-items:center;gap:6px 14px}
+.lien-etape{display:inline-flex;align-items:center;min-height:32px;font:600 14px var(--emia-police-titre);color:var(--emia-bleu-texte)}
+.etape-bloc{margin:0}
+@media (min-width:761px) and (max-height:700px){
+  .etape-cote .sous-titre{display:none}
+  .etape-cote h1{margin-bottom:6px}
+  .etape-resume{font-size:16px;margin-bottom:10px}
+  .etape-panneau h2{font-size:20px}
+}
 .etape-bloc h3{margin:0 0 2px;font:700 15px var(--emia-police-titre)}
-.etape-bloc p{margin:0;text-align:justify;text-justify:inter-word;hyphens:auto}
-.etape-nav{position:sticky;bottom:-16px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;padding:12px 0 14px;margin-top:8px;border-top:1px solid var(--emia-filet);max-width:680px;background:var(--emia-fond)}
+.etape-bloc p{margin:0;font-size:15px;line-height:1.45;text-align:justify;text-justify:inter-word;hyphens:auto}
+.etape-nav{position:sticky;bottom:-8px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;padding:10px 0;margin-top:6px;border-top:1px solid var(--emia-filet);max-width:920px;background:var(--emia-fond)}
 .pastilles-etapes{display:flex;gap:8px}
 .pastilles-etapes button{width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;font:700 17px var(--emia-police-titre)}
 .pastilles-etapes button[aria-current="step"]{outline:3px solid var(--emia-marine);outline-offset:3px}
@@ -1021,6 +1031,12 @@ const ACTUS = [
 /* Les notes de version, la plus récente en premier. La première donne le numéro du pied de page. */
 const NOTES_VERSION = [
   {
+    version: 'v2026.11.08-7',
+    date: '8 novembre 2026',
+    titre: "La roue se lit sans défiler",
+    texte: "Sur ordinateur, chaque étape du processus d'intervention tient maintenant sur un écran : les rubriques sont côte à côte, et la roue laisse plus de place au texte."
+  },
+  {
     version: 'v2026.11.08-6',
     date: '8 novembre 2026',
     titre: "Un exemple de bilan d'intervention",
@@ -1433,7 +1449,8 @@ function creerRoue(o) {
       const dispo = window.innerHeight - document.querySelector('.entete').offsetHeight - document.querySelector('.pied').offsetHeight;
       const H = Math.max(520, dispo);
       section.style.height = H + 'px';
-      u = Math.min(H, 820) / 100;
+      /* La roue ne prend jamais plus d'un tiers de la largeur, pour laisser au texte la place de tenir sans défiler. */
+      u = Math.min(Math.min(H, 820) / 100, window.innerWidth * 0.34 / 72);
       zone.style.height = '';
       zone.style.width = (72 * u) + 'px';
       Object.assign(svg.style, { width: 200 * u + 'px', height: 200 * u + 'px', left: (-22 * u - 100 * u) + 'px', top: (H / 2 - 100 * u) + 'px' });
@@ -1513,11 +1530,10 @@ function construireRoues() {
     precedent: '← Étape précédente', fin: 'Revenir au début',
     suivant: e => `Étape suivante : ${e.titre.toLowerCase()} →`,
     panneau: (e, i) => `
-      <span class="etape-pilule fond-${e.couleur}">Étape ${i + 1} sur ${ETAPES.length}</span>
+      <div class="etape-entete"><span class="etape-pilule fond-${e.couleur}">Étape ${i + 1} sur ${ETAPES.length}</span>${e.lien ? `<a class="lien-etape" href="${echapper(e.lien[1])}">${echapper(e.lien[0])} →</a>` : ''}</div>
       <h2>${echapper(e.titre)}</h2>
       <p class="etape-resume">${echapper(e.resume)}</p>
-      ${e.blocs.map(([t, x]) => `<div class="etape-bloc"><h3 class="texte-${e.couleur}">${echapper(t)}</h3><p>${echapper(x)}</p></div>`).join('')}
-      ${e.lien ? `<a class="bouton leger" href="${echapper(e.lien[1])}">${echapper(e.lien[0])}</a>` : ''}`
+      <div class="etape-blocs">${e.blocs.map(([t, x]) => `<div class="etape-bloc"><h3 class="texte-${e.couleur}">${echapper(t)}</h3><p>${echapper(x)}</p></div>`).join('')}</div>`
   });
   creerRoue({
     vue: 'repere-galaxie', prefixe: 'galaxie', items: GALAXIE,
