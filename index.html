@@ -163,6 +163,50 @@ section[data-page="accueil"]{flex:1;min-width:0;display:flex;flex-direction:colu
 .module:not(:has(.etiquette)) b{grid-area:1 / 2 / 3 / 3}
 .module span.desc{grid-area:desc;margin-top:6px;line-height:1.35}
 
+/* Actus */
+.heros-actions{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:10px 14px}
+.lien-actu{display:inline-flex;align-items:center;gap:8px;min-height:36px;padding:4px 14px 4px 6px;border-radius:999px;background:var(--emia-orange-pastel);color:var(--emia-marine);font:600 14px/1.3 var(--emia-police-titre);text-decoration:none;text-align:left}
+.lien-actu:hover{background:#FFE9D2}
+.lien-actu .pilule-actu{padding:2px 10px;border-radius:999px;background:var(--emia-orange);color:var(--emia-marine);font-size:12px}
+.liste-actus{display:grid;gap:16px}
+.carte-actu{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:start;padding:14px;border:var(--emia-bordure) solid var(--emia-filet);border-radius:var(--emia-rayon);text-decoration:none;color:var(--emia-marine)}
+.carte-actu:hover{border-color:var(--emia-orange)}
+.carte-actu img{width:120px;height:auto;border-radius:8px}
+.carte-actu h2{margin:2px 0 4px;font-size:19px}
+.carte-actu p{margin:0}
+.actu-date{color:var(--emia-gris-texte);font-size:14px}
+.page.article-actu{max-width:980px}
+.article-actu .chapeau{font-size:19px;line-height:1.45;margin:6px 0 16px}
+.article-actu .colonnes{display:grid;grid-template-columns:1fr 260px;gap:24px;align-items:start}
+.article-actu .affiche img{width:100%;height:auto;border-radius:var(--emia-rayon);border:1px solid var(--emia-filet)}
+.article-actu .affiche a{display:block}
+.article-actu .affiche small{display:block;margin-top:4px;color:var(--emia-gris-texte);font-size:13px}
+.programme{display:grid;grid-template-columns:repeat(auto-fill,minmax(190px,1fr));gap:8px;margin:8px 0 18px}
+.programme span{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:var(--emia-rayon);font-weight:700;line-height:1.3}
+.programme i{width:12px;height:12px;border-radius:50%;flex-shrink:0}
+.infos-actu{display:grid;grid-template-columns:auto 1fr;gap:6px 14px;margin:6px 0 18px}
+.infos-actu dt{font:700 15px var(--emia-police-titre)}
+.infos-actu dd{margin:0}
+.actions-actu{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:8px}
+@media (max-width:760px){
+  /* Accueil sur téléphone : l'actu passe en haut, la fleur rétrécit pour que tout tienne. */
+  body[data-vue="accueil"] main{padding-top:8px;padding-bottom:8px}
+  section[data-page="accueil"]{gap:6px}
+  .heros{display:flex;flex-direction:column}
+  .heros-actions{display:contents}
+  .lien-actu{order:-1;align-self:center;margin-bottom:6px;min-height:34px;font-size:13px;white-space:nowrap}
+  .lien-actu .pilule-actu{font-size:11px;padding:2px 8px}
+  .heros>img{width:clamp(56px,10vh,110px)!important;height:clamp(56px,10vh,110px)!important}
+  .heros .lecture p{line-height:1.35}
+  .heros .bouton{align-self:center}
+  .article-actu .colonnes{grid-template-columns:1fr}
+  .article-actu .affiche{max-width:320px}
+  .carte-actu{grid-template-columns:72px 1fr;gap:12px}
+  .carte-actu img{width:72px}
+  .infos-actu{grid-template-columns:1fr;gap:0}
+  .infos-actu dd{margin-bottom:8px}
+}
+
 /* La roue du processus : une fleur géante, un pétale par étape, qui tourne comme une roue à eau */
 body[data-vue="processus"] main{display:flex;max-width:none;padding:0}
 section[data-page="processus"]{flex:1;min-width:0;display:flex;overflow:hidden}
@@ -261,7 +305,10 @@ section[data-page="processus"]{flex:1;min-width:0;display:flex;overflow:hidden}
         <p>Ce hub rassemble ce que l'Équipe Mobile d'Intervention Autisme d'Ille-et-Vilaine met à la disposition des professionnels et des familles : comprendre comment nous intervenons, retrouver les notions qui nous servent de repères, et utiliser nos outils.</p>
         <p>L'EMIA35 intervient auprès de personnes autistes de plus de seize ans, lorsque leurs comportements entraînent une souffrance, un risque de rupture de parcours ou une mise en danger.</p>
       </div>
-      <a class="bouton leger" href="#emia">En savoir plus sur l'EMIA35</a>
+      <div class="heros-actions">
+        <a class="bouton leger" href="#emia">En savoir plus sur l'EMIA35</a>
+        <a class="lien-actu" id="lien-actu" href="#actus" hidden></a>
+      </div>
     </div>
 
     <nav class="modules" aria-label="Les modules du hub">
@@ -360,6 +407,18 @@ section[data-page="processus"]{flex:1;min-width:0;display:flex;overflow:hidden}
     <div class="outils" id="liste-outils"></div>
   </section>
 
+  <section class="page" data-page="actus" data-titre="Actus" hidden>
+    <a class="lien-retour" href="#accueil">← Revenir à l'accueil</a>
+    <h1 tabindex="-1">Actus</h1>
+    <p class="sous-titre">Les nouvelles de l'EMIA35 : rendez-vous, projets, outils.</p>
+    <div class="liste-actus" id="liste-actus"></div>
+  </section>
+
+  <section class="page article-actu" data-page="actu" data-titre="Actu" hidden>
+    <a class="lien-retour" href="#actus">← Toutes les actus</a>
+    <div id="article-actu"></div>
+  </section>
+
   <section class="page" data-page="notes" data-titre="Notes de version" hidden>
     <a class="lien-retour" href="#accueil">← Revenir à l'accueil</a>
     <h1 tabindex="-1">Notes de version</h1>
@@ -424,8 +483,52 @@ const OUTILS = [
   }
 ];
 
+/* Les actus, la plus récente en premier. Chaque actu a son adresse : #actu-<id>.
+   C'est ce lien qu'on met dans le post LinkedIn, pour n'écrire le texte qu'une fois.
+   paragraphes : le texte, un paragraphe par ligne. programme et infos : facultatifs. */
+const ACTUS = [
+  {
+    id: "portes-ouvertes-2027",
+    publiee: "8 novembre 2026",
+    quand: "Jeudi 21 janvier 2027",
+    titre: "Journée portes ouvertes le 21 janvier 2027",
+    titreCourt: "Portes ouvertes le 21 janvier",
+    chapeau: "L'EMIA35 ouvre ses portes le jeudi 21 janvier 2027, de 9h30 à 13h30, à Rennes.",
+    image: "actus/2027-01-21-portes-ouvertes.jpg",
+    imageAlt: "Affiche de la journée portes ouvertes de l'EMIA35, le 21 janvier 2027",
+    paragraphes: [
+      "Venez découvrir comment nous accompagnons les personnes autistes, leur entourage familial et les professionnels qui les entourent, dans la compréhension des particularités de fonctionnement liées à l'autisme.",
+      "Une matinée pour rencontrer l'équipe, comprendre comment nous travaillons, et échanger à partir de situations que nous avons accompagnées."
+    ],
+    programme: [
+      ["orange", "Accueil café"],
+      ["rouge", "Présentation de l'EMIA35"],
+      ["violet", "Critères d'intervention"],
+      ["bleu", "Présentation du processus d'intervention"],
+      ["cyan", "Focus sur les situations accompagnées"],
+      ["vert", "Présentation des évaluations utilisées"]
+    ],
+    infos: [
+      ["Quand", "Jeudi 21 janvier 2027, de 9h30 à 13h30"],
+      ["Où", "11 rue André et Yvonne Meynier, hall A, 2e étage à gauche, Rennes"],
+      ["Pour qui", "Les professionnels du médico-social et du sanitaire, et les partenaires institutionnels"],
+      ["Inscription", "Avant le 31 décembre 2026, en ligne ou par mail à emia35@adapei35.asso.fr"]
+    ],
+    liens: [
+      ["S'inscrire à la journée", "https://framadate.crans.org/e7fpxHxyA5NcMkbQ"],
+      ["Découvrir le processus d'intervention", "#processus"]
+    ]
+  }
+];
+
 /* Les notes de version, la plus récente en premier. La première donne le numéro du pied de page. */
 const NOTES_VERSION = [
+  {
+    version: 'v2026.11.08-2',
+    date: '8 novembre 2026',
+    titre: "Les actus",
+    texte: "Une page Actus rassemble les nouvelles de l'EMIA35, chacune avec sa propre adresse, à reprendre dans nos posts LinkedIn. Première actu : la journée portes ouvertes du 21 janvier 2027, annoncée aussi sur l'accueil."
+  },
   {
     version: 'v2026.11.08-1',
     date: '8 novembre 2026',
@@ -494,6 +597,55 @@ function afficherOutils() {
     </article>`).join('');
 }
 
+function afficherActus() {
+  document.getElementById('liste-actus').innerHTML = ACTUS.map(a => `
+    <a class="carte-actu" href="#actu-${echapper(a.id)}">
+      ${a.image ? `<img src="${echapper(a.image)}" alt="" loading="lazy">` : '<span></span>'}
+      <div>
+        <span class="actu-date">${echapper(a.quand || a.publiee)}</span>
+        <h2>${echapper(a.titre)}</h2>
+        <p>${echapper(a.chapeau)}</p>
+      </div>
+    </a>`).join('');
+  const derniere = ACTUS[0], lien = document.getElementById('lien-actu');
+  if (derniere) {
+    lien.href = '#actu-' + derniere.id;
+    lien.innerHTML = `<span class="pilule-actu">Actu</span>${echapper(derniere.titreCourt || derniere.titre)} →`;
+    lien.hidden = false;
+  }
+}
+
+function afficherArticle(id) {
+  const a = ACTUS.find(x => x.id === id);
+  const zone = document.getElementById('article-actu');
+  if (!a) { zone.innerHTML = '<h1 tabindex="-1">Actu introuvable</h1><p>Cette actu n\'existe plus.</p>'; return 'Actu introuvable'; }
+  const adresse = location.origin + location.pathname + '#actu-' + a.id;
+  zone.innerHTML = `
+    <span class="actu-date">Publiée le ${echapper(a.publiee)}</span>
+    <h1 tabindex="-1">${echapper(a.titre)}</h1>
+    <p class="chapeau">${echapper(a.chapeau)}</p>
+    <div class="colonnes">
+      <div>
+        <div class="lecture">${a.paragraphes.map(p => `<p>${echapper(p)}</p>`).join('')}</div>
+        ${a.programme ? `<h2>Au programme</h2><div class="programme">${a.programme.map(([c, t]) => `<span style="background:var(--emia-${c}-pastel)"><i style="background:var(--emia-${c})"></i>${echapper(t)}</span>`).join('')}</div>` : ''}
+        ${a.infos ? `<h2>En pratique</h2><dl class="infos-actu">${a.infos.map(([t, x]) => `<dt>${echapper(t)}</dt><dd>${echapper(x)}</dd>`).join('')}</dl>` : ''}
+        <div class="actions-actu">
+          ${(a.liens || []).map(([t, u], k) => `<a class="bouton${k ? ' leger' : ''}" href="${echapper(u)}"${u.startsWith('http') ? ' target="_blank" rel="noopener"' : ''}>${echapper(t)}</a>`).join('')}
+          <button class="bouton leger" type="button" id="copier-actu">Copier le lien de cette actu</button>
+        </div>
+      </div>
+      ${a.image ? `<div class="affiche"><a href="${echapper(a.image)}" target="_blank" rel="noopener"><img src="${echapper(a.image)}" alt="${echapper(a.imageAlt || '')}"></a><small>Cliquez sur l'affiche pour l'agrandir.</small></div>` : ''}
+    </div>`;
+  document.getElementById('copier-actu').addEventListener('click', ev => {
+    const b = ev.currentTarget;
+    const fini = t => { b.textContent = t; setTimeout(() => { b.textContent = 'Copier le lien de cette actu'; }, 1800); };
+    (navigator.clipboard ? navigator.clipboard.writeText(adresse) : Promise.reject())
+      .then(() => fini('Lien copié'))
+      .catch(() => fini(adresse));
+  });
+  return a.titre;
+}
+
 function afficherNotes() {
   document.getElementById('version').textContent = NOTES_VERSION[0].version;
   document.getElementById('liste-notes').innerHTML = NOTES_VERSION.map(n => `
@@ -506,13 +658,16 @@ function afficherNotes() {
 
 /* Une seule page visible à la fois, choisie par l'adresse (#emia, #ressources…). */
 function route(premierAffichage) {
-  const voulue = location.hash.slice(1);
-  const pages = [...document.querySelectorAll('[data-page]')];
+  let voulue = decodeURIComponent(location.hash.slice(1));
+  let titreActu = null;
+  if (voulue.startsWith('actu-')) { titreActu = afficherArticle(voulue.slice(5)); voulue = 'actu'; }
+  const pages = [...document.querySelectorAll('section[data-page]')];
   const page = pages.find(p => p.dataset.page === voulue) || pages[0];
   pages.forEach(p => { p.hidden = p !== page; });
   document.body.dataset.vue = page.dataset.page;
   if (page.dataset.page === 'processus') placerRoue();
-  document.title = page.dataset.page === 'accueil' ? page.dataset.titre : page.dataset.titre + ' · Le HUB de l\'EMIA35';
+  const titrePage = titreActu || page.dataset.titre;
+  document.title = page.dataset.page === 'accueil' ? titrePage : titrePage + ' · Le HUB de l\'EMIA35';
   if (!premierAffichage) {
     window.scrollTo(0, 0);
     const titre = page.querySelector('h1');
@@ -757,6 +912,7 @@ function afficherEtape(avecTransition) {
 }
 
 construireRoue();
+afficherActus();
 afficherOutils();
 afficherNotes();
 preparerRetourOutil();
