@@ -261,8 +261,44 @@ section[data-page="accueil"]{flex:1;min-width:0;display:flex;flex-direction:colu
 }
 
 /* La roue du processus : une fleur géante, un pétale par étape, qui tourne comme une roue à eau */
-body[data-vue="processus"] main{display:flex;max-width:none;padding:0}
-section[data-page="processus"]{flex:1;min-width:0;display:flex;overflow:hidden}
+body.vue-roue main{display:flex;max-width:none;padding:0}
+section.page-roue{flex:1;min-width:0;display:flex;overflow:hidden}
+.membres-galaxie{display:flex;flex-wrap:wrap;gap:8px}
+.membre-galaxie{display:flex;flex-direction:column;padding:6px 12px;border:var(--emia-bordure) solid;border-radius:var(--emia-rayon);background:#fff;line-height:1.3}
+.membre-galaxie b{font:700 15px var(--emia-police-titre)}
+.membre-galaxie small{font-size:13px;color:var(--emia-gris-texte)}
+
+/* Repères */
+.sommaire-reperes{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.carte-repere{display:flex;flex-direction:column;gap:4px;padding:16px 18px;border:var(--emia-bordure) solid;border-radius:var(--emia-rayon);text-decoration:none;color:var(--emia-marine)}
+.carte-repere b{font:700 18px var(--emia-police-titre)}
+.carte-repere:hover{filter:brightness(.97)}
+.carte-repere.orange{background:var(--emia-orange-pastel);border-color:var(--emia-orange)}
+.carte-repere.violet{background:var(--emia-violet-pastel);border-color:var(--emia-violet)}
+.carte-repere.cyan{background:var(--emia-cyan-pastel);border-color:var(--emia-cyan)}
+.carte-repere.vert{background:var(--emia-vert-pastel);border-color:var(--emia-vert)}
+.dyade,.grille-types{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:8px 0}
+.grille-types{grid-template-columns:repeat(3,1fr)}
+.carte.rouge{background:var(--emia-rouge-pastel);border-color:var(--emia-rouge)}
+.carte.bleu{background:var(--emia-bleu-pastel);border-color:var(--emia-bleu)}
+.dyade h3,.grille-types h3{font-size:17px;margin-bottom:8px}
+.grille-types p{margin:0}
+.ligne-idee{display:flex;gap:10px;margin:0 0 6px}
+.ligne-idee i{width:9px;height:9px;margin-top:8px;border-radius:50%;flex-shrink:0;background:var(--emia-marine)}
+.grille-idees{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:8px 0 4px}
+.grille-idees p{margin:0;padding:12px;border-radius:var(--emia-rayon);background:var(--emia-fond-clair);border-left:4px solid var(--emia-cyan);line-height:1.4}
+.grille-idees p:nth-child(even){border-left-color:var(--emia-vert)}
+.page.page-large{max-width:980px}
+.source{margin-top:16px;font-size:14px;color:var(--emia-gris-texte)}
+.lexique{display:grid;grid-template-columns:220px 1fr;gap:10px 18px;margin:0}
+.lexique dt{font:700 16px var(--emia-police-titre)}
+.lexique dd{margin:0;padding-bottom:10px;border-bottom:1px solid var(--emia-filet)}
+@media (max-width:760px){
+  .sommaire-reperes,.dyade,.grille-types{grid-template-columns:1fr}
+  .grille-idees{grid-template-columns:1fr 1fr}
+  .lexique{grid-template-columns:1fr;gap:0}
+  .lexique dd{margin-bottom:10px}
+}
 .roue-zone{position:relative;flex:0 0 auto;overflow:hidden}
 .roue-zone svg{position:absolute;display:block;overflow:visible}
 .roue-zone .petale{cursor:pointer}
@@ -294,7 +330,7 @@ section[data-page="processus"]{flex:1;min-width:0;display:flex;overflow:hidden}
 .texte-orange{color:var(--emia-orange-texte)}.texte-rouge{color:var(--emia-rouge-texte)}.texte-violet{color:var(--emia-violet-texte)}
 .texte-bleu{color:var(--emia-bleu-texte)}.texte-cyan{color:var(--emia-cyan-texte)}.texte-vert{color:var(--emia-vert-texte)}
 @media (max-width:760px){
-  section[data-page="processus"]{flex-direction:column;overflow:visible}
+  section.page-roue{flex-direction:column;overflow:visible}
   .roue-zone{width:100%}
   .etape-cote{padding:12px 16px 20px;overflow:visible}
   .etape-cote h1{font-size:22px}
@@ -372,7 +408,6 @@ section[data-page="processus"]{flex:1;min-width:0;display:flex;overflow:hidden}
       </a>
       <a class="module violet" href="#reperes">
         <span class="pastille"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-        <span class="etiquette">En construction</span>
         <b>Repères</b>
         <span class="desc">Les notions et les concepts qui aident à comprendre.</span>
       </a>
@@ -426,20 +461,20 @@ section[data-page="processus"]{flex:1;min-width:0;display:flex;overflow:hidden}
     </div>
   </section>
 
-  <section data-page="processus" data-titre="Processus d'intervention" hidden>
-    <div class="roue-zone" id="roue-zone" aria-hidden="true">
-      <svg id="roue-svg" viewBox="-100 -100 200 200"></svg>
+  <section class="page-roue" data-page="processus" data-titre="Processus d'intervention" hidden>
+    <div class="roue-zone" id="processus-zone" aria-hidden="true">
+      <svg id="processus-svg" viewBox="-100 -100 200 200"></svg>
     </div>
     <div class="etape-cote">
       <a class="lien-retour" href="#accueil">← Revenir à l'accueil</a>
       <h1 tabindex="-1">Processus d'intervention</h1>
       <p class="sous-titre">Six étapes, de votre première demande au suivi des préconisations.</p>
-      <div class="etape-panneau" id="etape-panneau" aria-live="polite"></div>
+      <div class="etape-panneau" id="processus-panneau" aria-live="polite"></div>
       <div class="etape-nav">
-        <div class="pastilles-etapes" id="pastilles-etapes" role="group" aria-label="Aller à une étape"></div>
+        <div class="pastilles-etapes" id="processus-pastilles" role="group" aria-label="Aller à une étape"></div>
         <div class="etape-boutons">
-          <button class="bouton leger" id="etape-precedente" type="button"></button>
-          <button class="bouton" id="etape-suivante" type="button"></button>
+          <button class="bouton leger" id="processus-precedente" type="button"></button>
+          <button class="bouton" id="processus-suivante" type="button"></button>
         </div>
       </div>
     </div>
@@ -448,11 +483,109 @@ section[data-page="processus"]{flex:1;min-width:0;display:flex;overflow:hidden}
   <section class="page" data-page="reperes" data-titre="Repères" hidden>
     <a class="lien-retour" href="#accueil">← Revenir à l'accueil</a>
     <h1 tabindex="-1">Repères</h1>
+    <p class="sous-titre">Les notions qui nous aident à comprendre les situations que nous rencontrons, et à en parler ensemble.</p>
+    <nav class="sommaire-reperes" aria-label="Les repères">
+      <a class="carte-repere orange" href="#repere-autisme"><b>C'est quoi l'autisme ?</b><span>Les deux grands critères du diagnostic, et ce qu'ils changent au quotidien.</span></a>
+      <a class="carte-repere violet" href="#repere-comportements"><b>Les comportements-défis</b><span>Ce que nous appelons ainsi, et pourquoi nous cherchons à les comprendre.</span></a>
+      <a class="carte-repere cyan" href="#repere-galaxie"><b>La galaxie partenariale</b><span>Autour de la personne, tous les partenaires avec qui nous travaillons.</span></a>
+      <a class="carte-repere vert" href="#repere-lexique"><b>Petit lexique</b><span>Les sigles et les mots que vous croiserez sur ce site.</span></a>
+    </nav>
+  </section>
+
+  <section class="page page-large" data-page="repere-autisme" data-titre="C'est quoi l'autisme ?" hidden>
+    <a class="lien-retour" href="#reperes">← Revenir aux repères</a>
+    <h1 tabindex="-1">C'est quoi l'autisme ?</h1>
+    <div class="lecture">
+      <p>L'autisme, ou trouble du spectre de l'autisme (TSA), fait partie des troubles du neurodéveloppement. Ce n'est pas une maladie : c'est une façon différente de percevoir et de comprendre le monde, qui accompagne la personne toute sa vie. On parle de spectre parce que l'autisme se manifeste très différemment d'une personne à l'autre.</p>
+    </div>
+    <h2>Deux grands critères : la dyade</h2>
+    <p class="sous-titre">Le diagnostic repose sur deux ensembles de critères, présents de façon durable et dans différents contextes.</p>
+    <div class="dyade">
+      <div class="carte cyan">
+        <h3>1. Des difficultés de communication et d'interactions sociales</h3>
+        <p class="ligne-idee"><i></i>Dans la réciprocité des échanges : engager une conversation, partager ses émotions ou ses intérêts.</p>
+        <p class="ligne-idee"><i></i>Dans la communication non verbale : regard, gestes, expressions du visage.</p>
+        <p class="ligne-idee"><i></i>Pour créer, entretenir et comprendre les relations avec les autres.</p>
+      </div>
+      <div class="carte vert">
+        <h3>2. Des comportements, intérêts ou activités restreints et répétitifs</h3>
+        <p class="ligne-idee"><i></i>Des mouvements, des paroles ou une utilisation des objets répétitifs.</p>
+        <p class="ligne-idee"><i></i>Un besoin d'immuabilité : routines, rituels, difficulté face au changement.</p>
+        <p class="ligne-idee"><i></i>Des intérêts très restreints, parfois très intenses.</p>
+        <p class="ligne-idee"><i></i>Une sensibilité inhabituelle aux sons, aux lumières, au toucher, aux odeurs : trop forte ou trop faible.</p>
+      </div>
+    </div>
+    <h2>Au quotidien, la personne autiste peut…</h2>
+    <div class="grille-idees">
+      <p>Paraître indifférente à l'autre.</p>
+      <p>Avoir des difficultés à comprendre et partager ses émotions.</p>
+      <p>Utiliser la présence de l'autre pour exprimer une demande.</p>
+      <p>Avoir un intérêt restreint pour un objet ou un thème.</p>
+      <p>Accumuler une tension interne, source de fatigue ou d'angoisse.</p>
+      <p>Avoir des comportements étranges, des écholalies ou des stéréotypies difficiles à décrypter.</p>
+      <p>Avoir du mal à comprendre et accepter un changement dans son environnement.</p>
+      <p>Être hyper ou hyporéactive aux stimulations sensorielles, ce qui la fatigue davantage.</p>
+    </div>
     <div class="encadre">
       <span class="i" aria-hidden="true">i</span>
-      <p><b>Cette page est en construction.</b> Nous y rassemblerons les notions et les concepts qui aident à comprendre les situations que nous rencontrons.</p>
+      <p><b>À retenir.</b> Ces particularités apparaissent dès la petite enfance, même si elles peuvent ne se révéler pleinement que plus tard. Elles ont un retentissement important sur la vie de la personne, et ne s'expliquent pas mieux par un handicap intellectuel.</p>
     </div>
-    <a class="bouton leger" href="#ressources">Voir les ressources en attendant</a>
+    <p class="source">D'après le DSM-5 (American Psychiatric Association, 2013) et l'infographie « C'est quoi l'autisme ? » de l'EMIA35. Pour en savoir plus : <a href="https://www.autismeinfoservice.fr/informer/autisme" target="_blank" rel="noopener">Autisme Info Service</a>.</p>
+  </section>
+
+  <section class="page page-large" data-page="repere-comportements" data-titre="Les comportements-défis" hidden>
+    <a class="lien-retour" href="#reperes">← Revenir aux repères</a>
+    <h1 tabindex="-1">Les comportements-défis</h1>
+    <div class="lecture">
+      <p>Ce sont des comportements d'une intensité, d'une fréquence ou d'une durée telles que la sécurité de la personne ou de son entourage est sérieusement mise en danger, ou qui limitent son accès aux lieux et aux services de la vie ordinaire. Les recommandations de l'ANESM, aujourd'hui intégrée à la Haute Autorité de Santé, parlent de « comportements-problèmes ».</p>
+    </div>
+    <h2>Pourquoi « défis » ?</h2>
+    <div class="lecture">
+      <p>Parce que ces comportements ne sont pas le problème de la personne seule : ils mettent au défi son entourage de comprendre ce qu'elle cherche à dire ou à obtenir. Un comportement-défi est souvent une tentative, pour la personne, de répondre à un besoin, de la seule façon qu'elle a trouvée.</p>
+    </div>
+    <h2>Quelques exemples</h2>
+    <div class="grille-types">
+      <div class="carte orange"><h3>Se faire du mal</h3><p>Se frapper la tête, se mordre, s'arracher les cheveux ou la peau.</p></div>
+      <div class="carte rouge"><h3>S'en prendre aux autres</h3><p>Frapper, pousser, tirer les cheveux, donner des coups de pied.</p></div>
+      <div class="carte violet"><h3>Détruire</h3><p>Jeter, casser, renverser, déchirer des objets.</p></div>
+      <div class="carte bleu"><h3>Des conduites sociales difficiles</h3><p>Crier, s'enfuir, se déshabiller, s'opposer en permanence.</p></div>
+      <div class="carte cyan"><h3>Des troubles alimentaires</h3><p>Ne manger que quelques aliments, vomir, manger ce qui ne se mange pas.</p></div>
+      <div class="carte vert"><h3>Des stéréotypies qui font obstacle</h3><p>Balancements, bruits répétitifs, déambulation, quand ils empêchent la personne de participer à sa vie.</p></div>
+    </div>
+    <h2>Ce que nous en faisons</h2>
+    <div class="lecture">
+      <p>Plutôt que de chercher seulement à faire cesser un comportement, nous cherchons à comprendre à quoi il sert pour la personne : c'est l'analyse fonctionnelle. Elle permet de proposer des changements dans l'environnement et dans l'accompagnement, pour que la personne trouve d'autres moyens de répondre à ses besoins.</p>
+    </div>
+    <div class="actions-actu">
+      <a class="bouton leger" href="https://emia35.github.io/baf/">Découvrir la BAF, notre outil d'analyse fonctionnelle</a>
+      <a class="bouton leger" href="#orientation">L'EMIA peut-elle vous aider ?</a>
+    </div>
+  </section>
+
+  <section class="page-roue" data-page="repere-galaxie" data-titre="La galaxie partenariale" hidden>
+    <div class="roue-zone" id="galaxie-zone" aria-hidden="true">
+      <svg id="galaxie-svg" viewBox="-100 -100 200 200"></svg>
+    </div>
+    <div class="etape-cote">
+      <a class="lien-retour" href="#reperes">← Revenir aux repères</a>
+      <h1 tabindex="-1">La galaxie partenariale</h1>
+      <p class="sous-titre">Autour de la personne, les partenaires avec qui l'EMIA travaille, et vers qui elle peut vous orienter.</p>
+      <div class="etape-panneau" id="galaxie-panneau" aria-live="polite"></div>
+      <div class="etape-nav">
+        <div class="pastilles-etapes" id="galaxie-pastilles" role="group" aria-label="Aller à un cercle de partenaires"></div>
+        <div class="etape-boutons">
+          <button class="bouton leger" id="galaxie-precedente" type="button"></button>
+          <button class="bouton" id="galaxie-suivante" type="button"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="page" data-page="repere-lexique" data-titre="Petit lexique" hidden>
+    <a class="lien-retour" href="#reperes">← Revenir aux repères</a>
+    <h1 tabindex="-1">Petit lexique</h1>
+    <p class="sous-titre">Les mots et les sigles que vous croiserez sur ce site, par ordre alphabétique.</p>
+    <dl class="lexique" id="lexique"></dl>
   </section>
 
   <section class="page" data-page="ressources" data-titre="Ressources" hidden>
@@ -817,6 +950,12 @@ const ACTUS = [
 /* Les notes de version, la plus récente en premier. La première donne le numéro du pied de page. */
 const NOTES_VERSION = [
   {
+    version: 'v2026.11.08-5',
+    date: '8 novembre 2026',
+    titre: "Les repères",
+    texte: "La page Repères ouvre sur quatre notions : c'est quoi l'autisme, les comportements-défis, la galaxie partenariale (une fleur qui tourne, comme le processus d'intervention) et un petit lexique."
+  },
+  {
     version: 'v2026.11.08-4',
     date: '8 novembre 2026',
     titre: "L'EMIA peut-elle vous aider ?",
@@ -988,7 +1127,8 @@ function route(premierAffichage) {
   const page = pages.find(p => p.dataset.page === voulue) || pages[0];
   pages.forEach(p => { p.hidden = p !== page; });
   document.body.dataset.vue = page.dataset.page;
-  if (page.dataset.page === 'processus') placerRoue();
+  document.body.classList.toggle('vue-roue', page.classList.contains('page-roue'));
+  if (ROUES[page.dataset.page]) ROUES[page.dataset.page].placer();
   const titrePage = titreActu || page.dataset.titre;
   document.title = page.dataset.page === 'accueil' ? titrePage : titrePage + ' · Le HUB de l\'EMIA35';
   if (!premierAffichage) {
@@ -1089,96 +1229,71 @@ const ICONES_ROUE = {
   rouage: '<circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/><circle cx="12" cy="12" r="6.5"/>',
   cible: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',
   liste: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8.5l1.2 1.2L11.5 7.5M13 8.5h4M8 14.5l1.2 1.2 2.3-2.2M13 14.5h4"/>'
+  ,
+  personne: '<circle cx="12" cy="7.5" r="3.5"/><path d="M5 20.5c0-4 3.1-7 7-7s7 3 7 7"/>',
+  batiment: '<rect x="4" y="6" width="16" height="15" rx="1.5"/><path d="M9 21v-4h6v4M8 10h2M14 10h2M8 13.5h2M14 13.5h2M8 6V3h8v3"/>',
+  soin: '<rect x="3.5" y="3.5" width="17" height="17" rx="4"/><path d="M12 8v8M8 12h8"/>',
+  institution: '<path d="M3 9.5L12 4l9 5.5M5 10v8M9.5 10v8M14.5 10v8M19 10v8M3 20.5h18"/>',
+  reseau: '<circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M10.8 7.2L6.2 15.8M13.2 7.2l4.6 8.6M7.5 18h9"/>',
+  mallette: '<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/>'
 };
 
-const ROUE = { active: 0, angle: 0, cible: 0, anim: null, mobile: null, petales: [], etiquettes: [] };
+/* La galaxie partenariale : six cercles de partenaires, dans l'ordre de la fleur « Galaxie partenariale ».
+   membres : [nom, précision facultative]. */
+const GALAXIE = [
+  {
+    couleur: "orange", degrade: ["#FFBA3E", "#FC8F3A"], texte: "#043471", icone: "personne",
+    petale: ["La personne et", "L'ENTOURAGE"],
+    titre: "La personne et son entourage",
+    resume: "Au centre : la personne elle-même, sa famille et ses proches. Ce sont eux qui vivent la situation au quotidien.",
+    membres: [["La personne"], ["Sa famille"], ["Son entourage"], ["Le milieu associatif"]]
+  },
+  {
+    couleur: "rouge", degrade: ["#F65B2B", "#EE3D20"], texte: "#FFFFFF", icone: "batiment",
+    petale: ["Les", "ESMS"],
+    titre: "Les établissements et services médico-sociaux",
+    resume: "Les lieux de vie, d'accueil et de travail qui accompagnent la personne.",
+    membres: [["MAS", "Maison d'accueil spécialisée"], ["FAM", "Foyer d'accueil médicalisé"], ["Foyer de vie"], ["Foyer d'hébergement"], ["IME", "Institut médico-éducatif"], ["ESAT", "Établissement et service d'aide par le travail"]]
+  },
+  {
+    couleur: "violet", degrade: ["#7B64C3", "#6A4FAD"], texte: "#FFFFFF", icone: "soin",
+    petale: ["Le", "SANITAIRE"],
+    titre: "Le sanitaire",
+    resume: "Les soins : l'hôpital, la psychiatrie, et ceux qui les organisent sur le territoire.",
+    membres: [["ARS", "Agence régionale de santé"], ["CHU de Rennes", "Hôpital Pontchaillou"], ["CHGR", "Centre hospitalier Guillaume Régnier"], ["CMP", "Centres médico-psychologiques"]]
+  },
+  {
+    couleur: "bleu", degrade: ["#1866DC", "#1C93E0"], texte: "#FFFFFF", icone: "institution",
+    petale: ["Le droit", "COMMUN"],
+    titre: "Le droit commun",
+    resume: "Les services ouverts à tous, qui ouvrent des droits et accompagnent la vie dans la cité.",
+    membres: [["CDAS", "Centre départemental d'action sociale"], ["CCAS", "Centre communal d'action sociale"], ["MDPH", "Maison départementale des personnes handicapées"], ["PCPE", "Pôle de compétences et de prestations externalisées"], ["C360", "Communauté 360"], ["Éducation nationale"]]
+  },
+  {
+    couleur: "cyan", degrade: ["#1EC3DD", "#16ACCF"], texte: "#043471", icone: "reseau",
+    petale: ["Le réseau", "AUTISME"],
+    titre: "Le réseau autisme",
+    resume: "Les dispositifs spécialisés dans l'autisme, pour informer, appuyer les équipes et accompagner.",
+    membres: [["CRA", "Centre Ressources Autisme"], ["Les EMIA de Bretagne"], ["Les missions d'appui"], ["SAMSAH TED", "Service d'accompagnement médico-social pour adultes handicapés"], ["UEDE 35"]]
+  },
+  {
+    couleur: "vert", degrade: ["#5DC766", "#73BD47"], texte: "#043471", icone: "mallette",
+    petale: ["Les", "LIBÉRAUX"],
+    titre: "Les professionnels libéraux",
+    resume: "Des professionnels installés en ville, qui interviennent auprès de la personne et de son entourage.",
+    membres: [["ADITSA"], ["La Cabane Sensorielle"], ["Éducateurs spécialisés"], ["Psychologues"], ["Ergothérapeutes"], ["Orthophonistes"], ["Services à domicile"]]
+  }
+];
+
+/* ==========================================================================
+   La roue réutilisable : une fleur géante, un pétale par élément, qui tourne
+   comme une roue à eau. Une page par roue, repérée par son préfixe d'identifiants.
+   ========================================================================== */
+
 const DISTANCE_PETALE = 58;
 const angleDe = i => -90 + 60 * i;   /* 01 en haut, puis dans le sens des aiguilles d'une montre */
-
-function construireRoue() {
-  const svg = document.getElementById('roue-svg');
-  let defs = '', fleur = '', etiquettes = '';
-  ETAPES.forEach((e, i) => {
-    const a = angleDe(i) * Math.PI / 180;
-    const x = DISTANCE_PETALE * Math.cos(a), y = DISTANCE_PETALE * Math.sin(a);
-    defs += `<linearGradient id="deg-${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${e.degrade[0]}"/><stop offset="1" stop-color="${e.degrade[1]}"/></linearGradient>`;
-    fleur += `<circle class="petale" data-i="${i}" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="30" fill="url(#deg-${i})"/>`;
-    etiquettes += `<g class="etiquette-petale" data-x="${x.toFixed(2)}" data-y="${y.toFixed(2)}" fill="${e.texte}">
-      <text y="-13" font-size="9">${String(i + 1).padStart(2, '0')}</text>
-      <text y="-2" font-size="4.2" font-weight="600">${echapper(e.petale[0])}</text>
-      <text y="5.5" font-size="${e.petale[1].length > 11 ? 5 : 6}">${echapper(e.petale[1])}</text>
-      <circle cy="17" r="7.5" fill="#fff"/>
-      <g transform="translate(-5.25 11.75) scale(.4375)" fill="none" stroke="${e.degrade[1]}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONES_ROUE[e.icone]}</g>
-    </g>`;
-  });
-  svg.innerHTML = `<defs>${defs}<filter id="ombre-roue" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#043471" flood-opacity=".18"/></filter></defs>
-    <g id="roue-tournante"><g filter="url(#ombre-roue)">${fleur}</g><circle r="34" fill="#fff"/>${etiquettes}</g>`;
-  ROUE.groupe = svg.querySelector('#roue-tournante');
-  ROUE.etiquettes = [...svg.querySelectorAll('.etiquette-petale')];
-  svg.querySelectorAll('.petale').forEach(p => p.addEventListener('click', () => allerEtape(+p.dataset.i)));
-
-  document.getElementById('pastilles-etapes').innerHTML = ETAPES.map((e, i) =>
-    `<button type="button" class="fond-${e.couleur}" data-i="${i}" aria-label="Étape ${i + 1} : ${echapper(e.titre)}">${i + 1}</button>`).join('');
-  document.querySelectorAll('#pastilles-etapes button').forEach(b => b.addEventListener('click', () => allerEtape(+b.dataset.i)));
-  document.getElementById('etape-precedente').addEventListener('click', () => allerEtape(ROUE.active - 1));
-  document.getElementById('etape-suivante').addEventListener('click', () => allerEtape(ROUE.active < ETAPES.length - 1 ? ROUE.active + 1 : 0));
-
-  /* Flèches du clavier, et glissement du doigt sur la roue */
-  document.addEventListener('keydown', ev => {
-    if (document.body.dataset.vue !== 'processus' || ev.altKey || ev.ctrlKey || ev.metaKey) return;
-    if (ev.key === 'ArrowRight') allerEtape(Math.min(ROUE.active + 1, ETAPES.length - 1));
-    if (ev.key === 'ArrowLeft') allerEtape(Math.max(ROUE.active - 1, 0));
-  });
-  let depart = null;
-  const zone = document.getElementById('roue-zone');
-  zone.addEventListener('pointerdown', ev => { depart = [ev.clientX, ev.clientY]; });
-  zone.addEventListener('pointerup', ev => {
-    if (!depart) return;
-    const dx = ev.clientX - depart[0], dy = ev.clientY - depart[1];
-    const d = ROUE.mobile ? dx : dy;
-    if (Math.abs(d) > 40) allerEtape(ROUE.active + (d < 0 ? 1 : -1));
-    depart = null;
-  });
-  window.addEventListener('resize', () => { if (document.body.dataset.vue === 'processus') placerRoue(); });
-  afficherEtape(false);
-}
-
-/* Taille et place de la roue : sur ordinateur, à gauche, le pétale actif pointe vers le texte ;
-   sur téléphone, en haut, le pétale actif pointe vers le bas. */
-function placerRoue() {
-  const section = document.querySelector('section[data-page="processus"]');
-  const zone = document.getElementById('roue-zone'), svg = document.getElementById('roue-svg');
-  const mobile = window.matchMedia('(max-width:760px)').matches;
-  let u;
-  if (mobile) {
-    section.style.height = '';
-    const W = zone.clientWidth || window.innerWidth;
-    u = W / 112;
-    zone.style.width = '';
-    zone.style.height = (68 * u) + 'px';
-    Object.assign(svg.style, { width: 200 * u + 'px', height: 200 * u + 'px', left: (W / 2 - 100 * u) + 'px', top: (-22 * u - 100 * u) + 'px' });
-  } else {
-    const dispo = window.innerHeight - document.querySelector('.entete').offsetHeight - document.querySelector('.pied').offsetHeight;
-    const H = Math.max(520, dispo);
-    section.style.height = H + 'px';
-    u = Math.min(H, 820) / 100;
-    zone.style.height = '';
-    zone.style.width = (72 * u) + 'px';
-    Object.assign(svg.style, { width: 200 * u + 'px', height: 200 * u + 'px', left: (-22 * u - 100 * u) + 'px', top: (H / 2 - 100 * u) + 'px' });
-  }
-  if (ROUE.mobile !== mobile) {
-    ROUE.mobile = mobile;
-    if (ROUE.anim) cancelAnimationFrame(ROUE.anim);
-    ROUE.angle = ROUE.cible = (mobile ? 90 : 0) - angleDe(ROUE.active);
-    appliquerAngle();
-  }
-}
-
-function appliquerAngle() {
-  const r = ROUE.angle;
-  ROUE.groupe.setAttribute('transform', `rotate(${r.toFixed(3)})`);
-  ROUE.etiquettes.forEach(g => g.setAttribute('transform', `translate(${g.dataset.x} ${g.dataset.y}) rotate(${(-r).toFixed(3)})`));
-}
+const ROUES = {};
+let ROUE = null;                     /* la roue du processus, gardée pour les essais */
 
 /* Le mouvement : départ lent (l'inertie de la roue), puis un léger dépassement avant de se poser. */
 function mouvement(p) {
@@ -1187,56 +1302,182 @@ function mouvement(p) {
   return 1 + c3 * Math.pow(s - 1, 3) + c1 * Math.pow(s - 1, 2);
 }
 
-function allerEtape(i) {
-  if (i < 0 || i >= ETAPES.length || i === ROUE.active) return;
-  let delta = (angleDe(ROUE.active) - angleDe(i)) % 360;
-  if (delta > 180) delta -= 360;
-  if (delta <= -180) delta += 360;
-  ROUE.active = i;
-  ROUE.cible += delta;
-  const depart = ROUE.angle, arrivee = ROUE.cible;
-  if (ROUE.anim) cancelAnimationFrame(ROUE.anim);
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    ROUE.angle = arrivee; appliquerAngle();
-  } else {
-    const t0 = performance.now(), duree = 1000 + 150 * Math.abs(delta) / 60;
-    const pas = t => {
-      const p = Math.min(1, (t - t0) / duree);
-      ROUE.angle = depart + (arrivee - depart) * mouvement(p);
-      appliquerAngle();
-      ROUE.anim = p < 1 ? requestAnimationFrame(pas) : null;
-    };
-    ROUE.anim = requestAnimationFrame(pas);
-  }
-  afficherEtape(true);
+/* o : { vue, prefixe, items, panneau(e, i), suivant(e), precedent, fin } */
+function creerRoue(o) {
+  const R = { active: 0, angle: 0, cible: 0, anim: null, mobile: null, items: o.items };
+  const $ = s => document.getElementById(o.prefixe + '-' + s);
+  const svg = $('svg'), zone = $('zone'), panneau = $('panneau');
+  const section = document.querySelector(`section[data-page="${o.vue}"]`);
+  let defs = '', fleur = '', etiquettes = '';
+  o.items.forEach((e, i) => {
+    const a = angleDe(i) * Math.PI / 180;
+    const x = DISTANCE_PETALE * Math.cos(a), y = DISTANCE_PETALE * Math.sin(a);
+    defs += `<linearGradient id="${o.prefixe}-deg-${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${e.degrade[0]}"/><stop offset="1" stop-color="${e.degrade[1]}"/></linearGradient>`;
+    fleur += `<circle class="petale" data-i="${i}" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="30" fill="url(#${o.prefixe}-deg-${i})"/>`;
+    etiquettes += `<g class="etiquette-petale" data-x="${x.toFixed(2)}" data-y="${y.toFixed(2)}" fill="${e.texte}">
+      <text y="-13" font-size="9">${String(i + 1).padStart(2, '0')}</text>
+      <text y="-2" font-size="4.2" font-weight="600">${echapper(e.petale[0])}</text>
+      <text y="5.5" font-size="${e.petale[1].length > 11 ? 5 : 6}">${echapper(e.petale[1])}</text>
+      <circle cy="17" r="7.5" fill="#fff"/>
+      <g transform="translate(-5.25 11.75) scale(.4375)" fill="none" stroke="${e.degrade[1]}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONES_ROUE[e.icone]}</g>
+    </g>`;
+  });
+  svg.innerHTML = `<defs>${defs}<filter id="${o.prefixe}-ombre" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#043471" flood-opacity=".18"/></filter></defs>
+    <g class="roue-tournante"><g filter="url(#${o.prefixe}-ombre)">${fleur}</g><circle r="34" fill="#fff"/>${etiquettes}</g>`;
+  const groupe = svg.querySelector('.roue-tournante');
+  const etiq = [...svg.querySelectorAll('.etiquette-petale')];
+  svg.querySelectorAll('.petale').forEach(p => p.addEventListener('click', () => R.aller(+p.dataset.i)));
+
+  $('pastilles').innerHTML = o.items.map((e, i) =>
+    `<button type="button" class="fond-${e.couleur}" data-i="${i}" aria-label="${i + 1} : ${echapper(e.titre)}">${i + 1}</button>`).join('');
+  $('pastilles').querySelectorAll('button').forEach(b => b.addEventListener('click', () => R.aller(+b.dataset.i)));
+  $('precedente').addEventListener('click', () => R.aller(R.active - 1));
+  $('suivante').addEventListener('click', () => R.aller(R.active < o.items.length - 1 ? R.active + 1 : 0));
+
+  R.appliquer = () => {
+    const r = R.angle;
+    groupe.setAttribute('transform', `rotate(${r.toFixed(3)})`);
+    etiq.forEach(g => g.setAttribute('transform', `translate(${g.dataset.x} ${g.dataset.y}) rotate(${(-r).toFixed(3)})`));
+  };
+
+  /* Sur ordinateur, à gauche, le pétale actif pointe vers le texte ; sur téléphone, en haut, vers le bas. */
+  R.placer = () => {
+    const mobile = window.matchMedia('(max-width:760px)').matches;
+    let u;
+    if (mobile) {
+      section.style.height = '';
+      const W = zone.clientWidth || window.innerWidth;
+      u = W / 112;
+      zone.style.width = '';
+      zone.style.height = (68 * u) + 'px';
+      Object.assign(svg.style, { width: 200 * u + 'px', height: 200 * u + 'px', left: (W / 2 - 100 * u) + 'px', top: (-22 * u - 100 * u) + 'px' });
+    } else {
+      const dispo = window.innerHeight - document.querySelector('.entete').offsetHeight - document.querySelector('.pied').offsetHeight;
+      const H = Math.max(520, dispo);
+      section.style.height = H + 'px';
+      u = Math.min(H, 820) / 100;
+      zone.style.height = '';
+      zone.style.width = (72 * u) + 'px';
+      Object.assign(svg.style, { width: 200 * u + 'px', height: 200 * u + 'px', left: (-22 * u - 100 * u) + 'px', top: (H / 2 - 100 * u) + 'px' });
+    }
+    if (R.mobile !== mobile) {
+      R.mobile = mobile;
+      if (R.anim) cancelAnimationFrame(R.anim);
+      R.angle = R.cible = (mobile ? 90 : 0) - angleDe(R.active);
+      R.appliquer();
+    }
+  };
+
+  R.aller = i => {
+    if (i < 0 || i >= o.items.length || i === R.active) return;
+    let delta = (angleDe(R.active) - angleDe(i)) % 360;
+    if (delta > 180) delta -= 360;
+    if (delta <= -180) delta += 360;
+    R.active = i;
+    R.cible += delta;
+    const depart = R.angle, arrivee = R.cible;
+    if (R.anim) cancelAnimationFrame(R.anim);
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      R.angle = arrivee; R.appliquer();
+    } else {
+      const t0 = performance.now(), duree = 1000 + 150 * Math.abs(delta) / 60;
+      const pas = t => {
+        const p = Math.min(1, (t - t0) / duree);
+        R.angle = depart + (arrivee - depart) * mouvement(p);
+        R.appliquer();
+        R.anim = p < 1 ? requestAnimationFrame(pas) : null;
+      };
+      R.anim = requestAnimationFrame(pas);
+    }
+    R.afficher(true);
+  };
+
+  R.afficher = avecTransition => {
+    const i = R.active, e = o.items[i];
+    const remplir = () => { panneau.innerHTML = o.panneau(e, i); panneau.classList.remove('sortie'); };
+    if (avecTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      panneau.classList.add('sortie');
+      setTimeout(remplir, 260);
+    } else remplir();
+    $('pastilles').querySelectorAll('button').forEach((b, k) => {
+      if (k === i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+    });
+    const prec = $('precedente'), suiv = $('suivante');
+    prec.hidden = i === 0;
+    prec.textContent = i > 0 ? o.precedent : '';
+    suiv.textContent = i < o.items.length - 1 ? o.suivant(o.items[i + 1]) : o.fin;
+  };
+
+  /* Flèches du clavier, et glissement du doigt sur la roue */
+  document.addEventListener('keydown', ev => {
+    if (document.body.dataset.vue !== o.vue || ev.altKey || ev.ctrlKey || ev.metaKey) return;
+    if (ev.key === 'ArrowRight') R.aller(Math.min(R.active + 1, o.items.length - 1));
+    if (ev.key === 'ArrowLeft') R.aller(Math.max(R.active - 1, 0));
+  });
+  let depart = null;
+  zone.addEventListener('pointerdown', ev => { depart = [ev.clientX, ev.clientY]; });
+  zone.addEventListener('pointerup', ev => {
+    if (!depart) return;
+    const d = R.mobile ? ev.clientX - depart[0] : ev.clientY - depart[1];
+    if (Math.abs(d) > 40) R.aller(R.active + (d < 0 ? 1 : -1));
+    depart = null;
+  });
+  window.addEventListener('resize', () => { if (document.body.dataset.vue === o.vue) R.placer(); });
+
+  R.afficher(false);
+  ROUES[o.vue] = R;
+  return R;
 }
 
-function afficherEtape(avecTransition) {
-  const i = ROUE.active, e = ETAPES[i];
-  const panneau = document.getElementById('etape-panneau');
-  const remplir = () => {
-    panneau.innerHTML = `
+function construireRoues() {
+  ROUE = creerRoue({
+    vue: 'processus', prefixe: 'processus', items: ETAPES,
+    precedent: '← Étape précédente', fin: 'Revenir au début',
+    suivant: e => `Étape suivante : ${e.titre.toLowerCase()} →`,
+    panneau: (e, i) => `
       <span class="etape-pilule fond-${e.couleur}">Étape ${i + 1} sur ${ETAPES.length}</span>
       <h2>${echapper(e.titre)}</h2>
       <p class="etape-resume">${echapper(e.resume)}</p>
       ${e.blocs.map(([t, x]) => `<div class="etape-bloc"><h3 class="texte-${e.couleur}">${echapper(t)}</h3><p>${echapper(x)}</p></div>`).join('')}
-      ${e.lien ? `<a class="bouton leger" href="${echapper(e.lien[1])}">${echapper(e.lien[0])}</a>` : ''}`;
-    panneau.classList.remove('sortie');
-  };
-  if (avecTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    panneau.classList.add('sortie');
-    setTimeout(remplir, 260);
-  } else remplir();
-  document.querySelectorAll('#pastilles-etapes button').forEach((b, k) => {
-    if (k === i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+      ${e.lien ? `<a class="bouton leger" href="${echapper(e.lien[1])}">${echapper(e.lien[0])}</a>` : ''}`
   });
-  const prec = document.getElementById('etape-precedente'), suiv = document.getElementById('etape-suivante');
-  prec.hidden = i === 0;
-  prec.textContent = i > 0 ? '← Étape précédente' : '';
-  suiv.textContent = i < ETAPES.length - 1 ? `Étape suivante : ${ETAPES[i + 1].titre.toLowerCase()} →` : 'Revenir au début';
+  creerRoue({
+    vue: 'repere-galaxie', prefixe: 'galaxie', items: GALAXIE,
+    precedent: '← Cercle précédent', fin: 'Revenir au début',
+    suivant: e => `Suivant : ${e.titre.charAt(0).toLowerCase() + e.titre.slice(1)} →`,
+    panneau: (e, i) => `
+      <span class="etape-pilule fond-${e.couleur}">Cercle ${i + 1} sur ${GALAXIE.length}</span>
+      <h2>${echapper(e.titre)}</h2>
+      <p class="etape-resume">${echapper(e.resume)}</p>
+      <div class="membres-galaxie">${e.membres.map(([n, p]) => `<span class="membre-galaxie" style="border-color:var(--emia-${e.couleur})"><b>${echapper(n)}</b>${p ? `<small>${echapper(p)}</small>` : ''}</span>`).join('')}</div>`
+  });
 }
 
-construireRoue();
+/* Le petit lexique : [mot, définition]. Trié à l'affichage. */
+const LEXIQUE = [
+  ["Analyse fonctionnelle", "Démarche qui cherche à comprendre à quoi sert un comportement pour la personne, en observant ce qui se passe avant, pendant et après."],
+  ["Bilan d'intervention", "Document présenté à la fin de l'évaluation : il retrace la démarche, l'analyse de l'équipe et les préconisations."],
+  ["Binôme", "La coordinatrice et le psychologue de l'EMIA à qui une intervention est confiée."],
+  ["CMP", "Centre médico-psychologique : consultations publiques de psychiatrie, rattachées à un hôpital."],
+  ["Comportements-défis", "Comportements dont l'intensité, la fréquence ou la durée mettent en danger la personne ou son entourage, ou l'empêchent d'accéder à la vie ordinaire. L'ANESM parle de comportements-problèmes."],
+  ["Convention d'intervention", "Document signé par tous au début de l'intervention : son cadre, ses limites, les autorisations et les objectifs."],
+  ["CRA", "Centre Ressources Autisme : il informe, oriente, et participe au diagnostic des situations complexes."],
+  ["ESMS", "Établissements et services médico-sociaux : foyers, maisons d'accueil spécialisées, instituts médico-éducatifs, services d'accompagnement…"],
+  ["MDPH", "Maison départementale des personnes handicapées : elle reconnaît le handicap, ouvre des droits et oriente vers des établissements ou des services."],
+  ["Préconisations", "Propositions concrètes de l'équipe pour adapter l'environnement et l'accompagnement de la personne."],
+  ["Rupture de parcours", "Interruption non souhaitée d'un accompagnement ou d'un lieu de vie : exclusion, hospitalisation qui se prolonge, retour à domicile sans solution."],
+  ["TND", "Troubles du neurodéveloppement : ils apparaissent au cours du développement de l'enfant. L'autisme en fait partie, comme le TDAH ou les troubles « dys »."],
+  ["TSA", "Trouble du spectre de l'autisme : le nom donné à l'autisme dans les classifications actuelles."]
+];
+
+function afficherLexique() {
+  document.getElementById('lexique').innerHTML = [...LEXIQUE]
+    .sort((a, b) => a[0].localeCompare(b[0], 'fr'))
+    .map(([m, d]) => `<dt>${echapper(m)}</dt><dd>${echapper(d)}</dd>`).join('');
+}
+
+construireRoues();
+afficherLexique();
 afficherArbre(false);
 afficherEquipe();
 afficherActus();
