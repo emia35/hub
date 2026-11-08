@@ -163,6 +163,48 @@ section[data-page="accueil"]{flex:1;min-width:0;display:flex;flex-direction:colu
 .module:not(:has(.etiquette)) b{grid-area:1 / 2 / 3 / 3}
 .module span.desc{grid-area:desc;margin-top:6px;line-height:1.35}
 
+/* La roue du processus : une fleur géante, un pétale par étape, qui tourne comme une roue à eau */
+body[data-vue="processus"] main{display:flex;max-width:none;padding:0}
+section[data-page="processus"]{flex:1;min-width:0;display:flex;overflow:hidden}
+.roue-zone{position:relative;flex:0 0 auto;overflow:hidden}
+.roue-zone svg{position:absolute;display:block;overflow:visible}
+.roue-zone .petale{cursor:pointer}
+.roue-zone text{font-family:var(--emia-police-titre);font-weight:700;text-anchor:middle;pointer-events:none}
+.etape-cote{flex:1;min-width:0;display:flex;flex-direction:column;padding:20px 32px 16px 28px;overflow-y:auto}
+.etape-cote .lien-retour{align-self:flex-start;margin-bottom:0}
+.etape-cote h1{font-size:26px}
+.etape-cote .sous-titre{margin:4px 0 14px}
+.etape-panneau{flex:1;max-width:680px;transition:opacity .25s ease,transform .25s ease}
+.etape-panneau.sortie{opacity:0;transform:translateY(8px)}
+.etape-pilule{display:inline-block;padding:3px 14px;border-radius:999px;font:600 14px/1.5 var(--emia-police-titre)}
+.etape-panneau h2{margin:8px 0 4px;font-size:24px}
+.etape-resume{margin:0 0 14px;font-size:18px;line-height:1.45}
+.etape-bloc{margin:0 0 12px}
+.etape-bloc h3{margin:0 0 2px;font:700 15px var(--emia-police-titre)}
+.etape-bloc p{margin:0;text-align:justify;text-justify:inter-word;hyphens:auto}
+.etape-nav{position:sticky;bottom:-16px;display:flex;flex-wrap:wrap;align-items:center;gap:12px 18px;padding:12px 0 14px;margin-top:8px;border-top:1px solid var(--emia-filet);max-width:680px;background:var(--emia-fond)}
+.pastilles-etapes{display:flex;gap:8px}
+.pastilles-etapes button{width:40px;height:40px;border-radius:50%;border:none;cursor:pointer;font:700 17px var(--emia-police-titre)}
+.pastilles-etapes button[aria-current="step"]{outline:3px solid var(--emia-marine);outline-offset:3px}
+.etape-boutons{display:flex;flex-wrap:wrap;gap:10px}
+.etape-boutons .bouton{min-height:44px;padding:8px 18px;font-size:15px}
+.fond-orange{background:var(--emia-orange);color:var(--emia-marine)}
+.fond-rouge{background:var(--emia-rouge);color:#fff}
+.fond-violet{background:var(--emia-violet);color:#fff}
+.fond-bleu{background:var(--emia-bleu);color:#fff}
+.fond-cyan{background:var(--emia-cyan);color:var(--emia-marine)}
+.fond-vert{background:var(--emia-vert);color:var(--emia-marine)}
+.texte-orange{color:var(--emia-orange-texte)}.texte-rouge{color:var(--emia-rouge-texte)}.texte-violet{color:var(--emia-violet-texte)}
+.texte-bleu{color:var(--emia-bleu-texte)}.texte-cyan{color:var(--emia-cyan-texte)}.texte-vert{color:var(--emia-vert-texte)}
+@media (max-width:760px){
+  section[data-page="processus"]{flex-direction:column;overflow:visible}
+  .roue-zone{width:100%}
+  .etape-cote{padding:12px 16px 20px;overflow:visible}
+  .etape-cote h1{font-size:22px}
+  .etape-panneau h2{font-size:21px}
+  .etape-resume{font-size:17px}
+}
+
 @media (max-width:760px){
   main{padding-top:24px}
   .temps{grid-template-columns:1fr}
@@ -225,7 +267,6 @@ section[data-page="accueil"]{flex:1;min-width:0;display:flex;flex-direction:colu
     <nav class="modules" aria-label="Les modules du hub">
       <a class="module orange" href="#processus">
         <span class="pastille"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="17" r="2.5"/><circle cx="12" cy="7" r="2.5"/><circle cx="19" cy="17" r="2.5"/><path d="M6.5 15 10.5 9M13.5 9l4 6"/></svg></span>
-        <span class="etiquette">En construction</span>
         <b>Processus d'intervention</b>
         <span class="desc">Comment se déroule une intervention de l'EMIA35, étape par étape.</span>
       </a>
@@ -283,14 +324,23 @@ section[data-page="accueil"]{flex:1;min-width:0;display:flex;flex-direction:colu
     </div>
   </section>
 
-  <section class="page" data-page="processus" data-titre="Processus d'intervention" hidden>
-    <a class="lien-retour" href="#accueil">← Revenir à l'accueil</a>
-    <h1 tabindex="-1">Processus d'intervention</h1>
-    <div class="encadre">
-      <span class="i" aria-hidden="true">i</span>
-      <p><b>Cette page est en construction.</b> Nous y expliquerons, pour les professionnels et les familles, comment se déroule une intervention de l'EMIA35, étape par étape.</p>
+  <section data-page="processus" data-titre="Processus d'intervention" hidden>
+    <div class="roue-zone" id="roue-zone" aria-hidden="true">
+      <svg id="roue-svg" viewBox="-100 -100 200 200"></svg>
     </div>
-    <a class="bouton leger" href="#emia">Découvrir l'EMIA35 en attendant</a>
+    <div class="etape-cote">
+      <a class="lien-retour" href="#accueil">← Revenir à l'accueil</a>
+      <h1 tabindex="-1">Processus d'intervention</h1>
+      <p class="sous-titre">Six étapes, de votre première demande au suivi des préconisations.</p>
+      <div class="etape-panneau" id="etape-panneau" aria-live="polite"></div>
+      <div class="etape-nav">
+        <div class="pastilles-etapes" id="pastilles-etapes" role="group" aria-label="Aller à une étape"></div>
+        <div class="etape-boutons">
+          <button class="bouton leger" id="etape-precedente" type="button"></button>
+          <button class="bouton" id="etape-suivante" type="button"></button>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="page" data-page="reperes" data-titre="Repères" hidden>
@@ -377,6 +427,12 @@ const OUTILS = [
 /* Les notes de version, la plus récente en premier. La première donne le numéro du pied de page. */
 const NOTES_VERSION = [
   {
+    version: 'v2026.11.08-1',
+    date: '8 novembre 2026',
+    titre: "La roue du processus d'intervention",
+    texte: "La page Processus d'intervention présente les six étapes d'une intervention de l'EMIA35 sous la forme d'une fleur qui tourne d'une étape à l'autre."
+  },
+  {
     version: 'v2026.11.06-6',
     date: '6 novembre 2026',
     titre: "Un accueil rééquilibré",
@@ -455,6 +511,7 @@ function route(premierAffichage) {
   const page = pages.find(p => p.dataset.page === voulue) || pages[0];
   pages.forEach(p => { p.hidden = p !== page; });
   document.body.dataset.vue = page.dataset.page;
+  if (page.dataset.page === 'processus') placerRoue();
   document.title = page.dataset.page === 'accueil' ? page.dataset.titre : page.dataset.titre + ' · Le HUB de l\'EMIA35';
   if (!premierAffichage) {
     window.scrollTo(0, 0);
@@ -470,6 +527,236 @@ function preparerRetourOutil() {
   document.getElementById('retour-outil').hidden = false;
 }
 
+/* ==========================================================================
+   La roue du processus d'intervention
+   Textes tirés de la plaquette, de la fleur du processus et de la présentation
+   au COPIL de novembre 2024. Une étape = un pétale, dans l'ordre de la fleur.
+   ========================================================================== */
+
+const ETAPES = [
+  {
+    couleur: "orange", degrade: ["#FFBA3E", "#FC8F3A"], texte: "#043471", icone: "ampoule",
+    petale: ["Recueil de la", "DEMANDE"],
+    titre: "Recueil de la demande",
+    resume: "Tout commence par un premier contact : la personne elle-même, sa famille ou les professionnels qui l'accompagnent sollicitent l'EMIA.",
+    blocs: [
+      ["Qui peut nous solliciter ?", "La personne elle-même, sa famille ou son entourage, un établissement médico-social, un établissement de santé, un professionnel libéral."],
+      ["Comment ?", "Par téléphone au 02 99 78 01 45, du lundi au vendredi de 8h30 à 16h30, ou par mail à emia35@adapei35.asso.fr. Une coordinatrice vous recontacte sous 48 heures et vous propose de remplir un formulaire de demande d'intervention."],
+      ["Et ensuite ?", "La demande est présentée en réunion d'équipe. Si l'EMIA n'est pas la bonne porte, nous vous orientons vers le dispositif le plus adapté."]
+    ]
+  },
+  {
+    couleur: "rouge", degrade: ["#F65B2B", "#EE3D20"], texte: "#FFFFFF", icone: "loupe",
+    petale: ["Évaluation de la", "DEMANDE"],
+    titre: "Évaluation de la demande",
+    resume: "Avant de décider d'intervenir, nous prenons le temps de comprendre la situation.",
+    blocs: [
+      ["Nos critères", "La personne a 16 ans ou plus. Un diagnostic de trouble du spectre de l'autisme est posé ou fortement suspecté. Elle présente des comportements-défis, en lien avec l'autisme, qui entraînent une souffrance, un risque de rupture de parcours, voire une mise en danger."],
+      ["Comment ?", "Nous rencontrons la personne et son entourage, et nous recueillons des informations auprès des partenaires, pour repérer les besoins, les freins et les leviers."],
+      ["Et ensuite ?", "En réunion d'équipe, nous décidons d'intervenir ou de vous orienter vers un dispositif plus adapté. Si l'intervention est retenue, la situation est inscrite sur liste d'attente."]
+    ]
+  },
+  {
+    couleur: "violet", degrade: ["#7B64C3", "#6A4FAD"], texte: "#FFFFFF", icone: "convention",
+    petale: ["Signature de la", "CONVENTION"],
+    titre: "Signature de la convention",
+    resume: "L'intervention commence par l'engagement de chacun, autour de la même table.",
+    blocs: [
+      ["Qui est autour de la table ?", "La personne, son entourage, les professionnels qui l'accompagnent et les responsables des établissements concernés."],
+      ["Que dit la convention ?", "Le cadre et les limites de l'intervention, les autorisations nécessaires, les objectifs, et la place de chacun. Le binôme de l'EMIA qui suivra la situation, une coordinatrice et un psychologue, est désigné."],
+      ["Bon à savoir", "L'intervention dure six mois, renouvelables. Elle peut s'arrêter à votre demande ou à celle de l'EMIA."]
+    ]
+  },
+  {
+    couleur: "bleu", degrade: ["#1866DC", "#1C93E0"], texte: "#FFFFFF", icone: "rouage",
+    petale: ["Processus d'", "ÉVALUATION"],
+    titre: "Processus d'évaluation",
+    resume: "Nous ne sommes pas là pour noter, mais pour comprendre.",
+    blocs: [
+      ["Comment ?", "Pas à pas, et sur mesure : observations sur les lieux de vie, évaluations du fonctionnement (communication, sensorialité, cognition), analyse fonctionnelle des comportements-défis, échanges avec la personne, sa famille et les équipes."],
+      ["Pour comprendre quoi ?", "Le fonctionnement de la personne, ses centres d'intérêt, ses points forts, ses particularités sensorielles, et ce que son environnement peut changer."],
+      ["Sans attendre le bilan", "Des préconisations peuvent être proposées au fil de l'intervention, et des temps de sensibilisation à l'autisme organisés avec les équipes."]
+    ]
+  },
+  {
+    couleur: "cyan", degrade: ["#1EC3DD", "#16ACCF"], texte: "#043471", icone: "cible",
+    petale: ["Bilan et", "PRÉCONISATIONS"],
+    titre: "Bilan d'intervention et préconisations",
+    resume: "Nous mettons par écrit ce que nous avons compris, et ce que nous proposons.",
+    blocs: [
+      ["Le bilan d'intervention", "Il retrace en toute transparence les étapes de l'intervention et l'analyse de l'équipe, pour aider chacun à comprendre le fonctionnement de la personne. C'est une photographie à un moment donné, pas une vérité définitive."],
+      ["Sa présentation", "En réunion, avec la personne, son entourage et les partenaires : la démarche, les préconisations, et la façon dont le suivi s'organisera."],
+      ["Bon à savoir", "L'écriture prend du temps. Il est possible que nous venions moins vous voir pendant cette période, mais nous restons disponibles."]
+    ]
+  },
+  {
+    couleur: "vert", degrade: ["#5DC766", "#73BD47"], texte: "#043471", icone: "liste",
+    petale: ["Suivi des", "PRÉCONISATIONS"],
+    titre: "Suivi des préconisations",
+    resume: "Le bilan n'est pas la fin : nous vous soutenons pour mettre en place ce qui a été proposé.",
+    blocs: [
+      ["Comment ?", "Au moins trois rencontres, prévues dès la présentation du bilan. Nous aidons à transformer les préconisations en plan d'action, à les essayer et à les ajuster."],
+      ["Et aussi", "Présenter le bilan à de nouveaux partenaires, lors d'un accueil temporaire par exemple, ou appuyer l'ouverture de droits."],
+      ["Et après ?", "Le suivi dure environ six mois. Puis l'intervention prend fin, et ceux qui accompagnent la personne au quotidien poursuivent le travail engagé."]
+    ]
+  }
+];
+
+/* Pictogrammes au trait, dans un repère 24 × 24 */
+const ICONES_ROUE = {
+  ampoule: '<path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/>',
+  loupe: '<circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5.5 5.5"/>',
+  convention: '<rect x="5" y="3" width="14" height="18" rx="2"/><path d="M8.5 8h7M8.5 11.5h7M8.5 16.5c1.2-1.4 2 .9 3.2 0s1.6-.9 2.8 0"/>',
+  rouage: '<circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3M5.3 5.3l2.1 2.1M16.6 16.6l2.1 2.1M5.3 18.7l2.1-2.1M16.6 7.4l2.1-2.1"/><circle cx="12" cy="12" r="6.5"/>',
+  cible: '<circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/>',
+  liste: '<rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8.5l1.2 1.2L11.5 7.5M13 8.5h4M8 14.5l1.2 1.2 2.3-2.2M13 14.5h4"/>'
+};
+
+const ROUE = { active: 0, angle: 0, cible: 0, anim: null, mobile: null, petales: [], etiquettes: [] };
+const DISTANCE_PETALE = 58;
+const angleDe = i => -90 + 60 * i;   /* 01 en haut, puis dans le sens des aiguilles d'une montre */
+
+function construireRoue() {
+  const svg = document.getElementById('roue-svg');
+  let defs = '', fleur = '', etiquettes = '';
+  ETAPES.forEach((e, i) => {
+    const a = angleDe(i) * Math.PI / 180;
+    const x = DISTANCE_PETALE * Math.cos(a), y = DISTANCE_PETALE * Math.sin(a);
+    defs += `<linearGradient id="deg-${i}" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${e.degrade[0]}"/><stop offset="1" stop-color="${e.degrade[1]}"/></linearGradient>`;
+    fleur += `<circle class="petale" data-i="${i}" cx="${x.toFixed(2)}" cy="${y.toFixed(2)}" r="30" fill="url(#deg-${i})"/>`;
+    etiquettes += `<g class="etiquette-petale" data-x="${x.toFixed(2)}" data-y="${y.toFixed(2)}" fill="${e.texte}">
+      <text y="-13" font-size="9">${String(i + 1).padStart(2, '0')}</text>
+      <text y="-2" font-size="4.2" font-weight="600">${echapper(e.petale[0])}</text>
+      <text y="5.5" font-size="${e.petale[1].length > 11 ? 5 : 6}">${echapper(e.petale[1])}</text>
+      <circle cy="17" r="7.5" fill="#fff"/>
+      <g transform="translate(-5.25 11.75) scale(.4375)" fill="none" stroke="${e.degrade[1]}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">${ICONES_ROUE[e.icone]}</g>
+    </g>`;
+  });
+  svg.innerHTML = `<defs>${defs}<filter id="ombre-roue" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="1" stdDeviation="1.5" flood-color="#043471" flood-opacity=".18"/></filter></defs>
+    <g id="roue-tournante"><g filter="url(#ombre-roue)">${fleur}</g><circle r="34" fill="#fff"/>${etiquettes}</g>`;
+  ROUE.groupe = svg.querySelector('#roue-tournante');
+  ROUE.etiquettes = [...svg.querySelectorAll('.etiquette-petale')];
+  svg.querySelectorAll('.petale').forEach(p => p.addEventListener('click', () => allerEtape(+p.dataset.i)));
+
+  document.getElementById('pastilles-etapes').innerHTML = ETAPES.map((e, i) =>
+    `<button type="button" class="fond-${e.couleur}" data-i="${i}" aria-label="Étape ${i + 1} : ${echapper(e.titre)}">${i + 1}</button>`).join('');
+  document.querySelectorAll('#pastilles-etapes button').forEach(b => b.addEventListener('click', () => allerEtape(+b.dataset.i)));
+  document.getElementById('etape-precedente').addEventListener('click', () => allerEtape(ROUE.active - 1));
+  document.getElementById('etape-suivante').addEventListener('click', () => allerEtape(ROUE.active < ETAPES.length - 1 ? ROUE.active + 1 : 0));
+
+  /* Flèches du clavier, et glissement du doigt sur la roue */
+  document.addEventListener('keydown', ev => {
+    if (document.body.dataset.vue !== 'processus' || ev.altKey || ev.ctrlKey || ev.metaKey) return;
+    if (ev.key === 'ArrowRight') allerEtape(Math.min(ROUE.active + 1, ETAPES.length - 1));
+    if (ev.key === 'ArrowLeft') allerEtape(Math.max(ROUE.active - 1, 0));
+  });
+  let depart = null;
+  const zone = document.getElementById('roue-zone');
+  zone.addEventListener('pointerdown', ev => { depart = [ev.clientX, ev.clientY]; });
+  zone.addEventListener('pointerup', ev => {
+    if (!depart) return;
+    const dx = ev.clientX - depart[0], dy = ev.clientY - depart[1];
+    const d = ROUE.mobile ? dx : dy;
+    if (Math.abs(d) > 40) allerEtape(ROUE.active + (d < 0 ? 1 : -1));
+    depart = null;
+  });
+  window.addEventListener('resize', () => { if (document.body.dataset.vue === 'processus') placerRoue(); });
+  afficherEtape(false);
+}
+
+/* Taille et place de la roue : sur ordinateur, à gauche, le pétale actif pointe vers le texte ;
+   sur téléphone, en haut, le pétale actif pointe vers le bas. */
+function placerRoue() {
+  const section = document.querySelector('section[data-page="processus"]');
+  const zone = document.getElementById('roue-zone'), svg = document.getElementById('roue-svg');
+  const mobile = window.matchMedia('(max-width:760px)').matches;
+  let u;
+  if (mobile) {
+    section.style.height = '';
+    const W = zone.clientWidth || window.innerWidth;
+    u = W / 112;
+    zone.style.width = '';
+    zone.style.height = (68 * u) + 'px';
+    Object.assign(svg.style, { width: 200 * u + 'px', height: 200 * u + 'px', left: (W / 2 - 100 * u) + 'px', top: (-22 * u - 100 * u) + 'px' });
+  } else {
+    const dispo = window.innerHeight - document.querySelector('.entete').offsetHeight - document.querySelector('.pied').offsetHeight;
+    const H = Math.max(520, dispo);
+    section.style.height = H + 'px';
+    u = Math.min(H, 820) / 100;
+    zone.style.height = '';
+    zone.style.width = (72 * u) + 'px';
+    Object.assign(svg.style, { width: 200 * u + 'px', height: 200 * u + 'px', left: (-22 * u - 100 * u) + 'px', top: (H / 2 - 100 * u) + 'px' });
+  }
+  if (ROUE.mobile !== mobile) {
+    ROUE.mobile = mobile;
+    if (ROUE.anim) cancelAnimationFrame(ROUE.anim);
+    ROUE.angle = ROUE.cible = (mobile ? 90 : 0) - angleDe(ROUE.active);
+    appliquerAngle();
+  }
+}
+
+function appliquerAngle() {
+  const r = ROUE.angle;
+  ROUE.groupe.setAttribute('transform', `rotate(${r.toFixed(3)})`);
+  ROUE.etiquettes.forEach(g => g.setAttribute('transform', `translate(${g.dataset.x} ${g.dataset.y}) rotate(${(-r).toFixed(3)})`));
+}
+
+/* Le mouvement : départ lent (l'inertie de la roue), puis un léger dépassement avant de se poser. */
+function mouvement(p) {
+  const s = p * p * (3 - 2 * p);
+  const c1 = 0.9, c3 = c1 + 1;
+  return 1 + c3 * Math.pow(s - 1, 3) + c1 * Math.pow(s - 1, 2);
+}
+
+function allerEtape(i) {
+  if (i < 0 || i >= ETAPES.length || i === ROUE.active) return;
+  let delta = (angleDe(ROUE.active) - angleDe(i)) % 360;
+  if (delta > 180) delta -= 360;
+  if (delta <= -180) delta += 360;
+  ROUE.active = i;
+  ROUE.cible += delta;
+  const depart = ROUE.angle, arrivee = ROUE.cible;
+  if (ROUE.anim) cancelAnimationFrame(ROUE.anim);
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    ROUE.angle = arrivee; appliquerAngle();
+  } else {
+    const t0 = performance.now(), duree = 1000 + 150 * Math.abs(delta) / 60;
+    const pas = t => {
+      const p = Math.min(1, (t - t0) / duree);
+      ROUE.angle = depart + (arrivee - depart) * mouvement(p);
+      appliquerAngle();
+      ROUE.anim = p < 1 ? requestAnimationFrame(pas) : null;
+    };
+    ROUE.anim = requestAnimationFrame(pas);
+  }
+  afficherEtape(true);
+}
+
+function afficherEtape(avecTransition) {
+  const i = ROUE.active, e = ETAPES[i];
+  const panneau = document.getElementById('etape-panneau');
+  const remplir = () => {
+    panneau.innerHTML = `
+      <span class="etape-pilule fond-${e.couleur}">Étape ${i + 1} sur ${ETAPES.length}</span>
+      <h2>${echapper(e.titre)}</h2>
+      <p class="etape-resume">${echapper(e.resume)}</p>
+      ${e.blocs.map(([t, x]) => `<div class="etape-bloc"><h3 class="texte-${e.couleur}">${echapper(t)}</h3><p>${echapper(x)}</p></div>`).join('')}`;
+    panneau.classList.remove('sortie');
+  };
+  if (avecTransition && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    panneau.classList.add('sortie');
+    setTimeout(remplir, 260);
+  } else remplir();
+  document.querySelectorAll('#pastilles-etapes button').forEach((b, k) => {
+    if (k === i) b.setAttribute('aria-current', 'step'); else b.removeAttribute('aria-current');
+  });
+  const prec = document.getElementById('etape-precedente'), suiv = document.getElementById('etape-suivante');
+  prec.hidden = i === 0;
+  prec.textContent = i > 0 ? '← Étape précédente' : '';
+  suiv.textContent = i < ETAPES.length - 1 ? `Étape suivante : ${ETAPES[i + 1].titre.toLowerCase()} →` : 'Revenir au début';
+}
+
+construireRoue();
 afficherOutils();
 afficherNotes();
 preparerRetourOutil();
