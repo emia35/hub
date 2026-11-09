@@ -11,19 +11,22 @@ Public : professionnels et familles. Registre partenaires de la charte (vouvoiem
 `logos/`, `polices/` : copies du kit de la charte (polices réduites au latin, en woff2 ; logos non modifiés).
 `actus/` : les images des actus. `equipe/` : les photos de l'équipe (sans métadonnées, avec accord écrit).
 `documents/` : documents publics à ouvrir depuis le hub (aujourd'hui l'exemple fictif de bilan, « Nora », 24 pages, marqué « exemple fictif » à chaque page).
-Non publiés (`.gitignore`) : `A lire/` (documents de travail d'Arthur : formulaires, présentations, trombinoscope Word avec photos, à ne jamais publier), `sources/`, `passation_claude_code_EMIA35/`, `Comment je me sens/`.
+Non publiés (`.gitignore`) : `maquettes/` (maquettes cliquables à montrer à Arthur avant de toucher au vrai hub), `A lire/` (documents de travail d'Arthur : formulaires, présentations, trombinoscope Word avec photos, à ne jamais publier), `sources/`, `passation_claude_code_EMIA35/`, `Comment je me sens/`.
 
 ## Les pages
 
+Navigation (depuis la v2026.11.09-1) : un menu toujours visible dans l'en-tête (À propos, Accompagnement, Comprendre, Outils, Actus, Contact) et le bouton « L'EMIA peut-elle vous aider ? » (vers `#orientation`) ; sous 1240 px, le menu se replie derrière un bouton « Menu ». Chaque rubrique de plusieurs pages a un sous-menu en pastilles (`#sous-nav`). Les rubriques se règlent dans `GROUPES` (pages du sous-menu) et `GROUPE_DE` (rubrique de chaque page) ; `majNavigation(vue)` est appelée par `route()`. Les liens « ← Revenir à… » sont masqués, sauf sur les articles d'actu. Une nouvelle page doit être ajoutée à `GROUPE_DE`, sinon aucun onglet du menu n'est surligné.
+
 | Adresse | Contenu |
 |---|---|
-| `#accueil` | Fleur, présentation, annonce de la dernière actu, trois modules. Doit tenir sur un écran sans défiler (1280×600, 360×640). |
-| `#emia` | Présentation de l'EMIA35, liens vers l'équipe et l'arbre. |
+| `#accueil` | Fleur, nom de l'équipe, une phrase, deux boutons (arbre, processus), quatre cartes de rubrique, bandeau dernière actu + téléphone. Doit tenir sur un écran sans défiler à 1280×600 (à 360×640 il dépasse d'environ 30 px). |
+| `#emia` | À propos : présentation de l'EMIA35. |
 | `#equipe` | Trombinoscope : métiers par groupe, photo et nom seulement avec accord écrit. |
 | `#processus` | Roue du processus d'intervention, six étapes. |
 | `#bilan-exemple` | À quoi ressemble un bilan : les parties du bilan fictif de Nora, un extrait par partie, le PDF complet. Reliée depuis l'étape 5 et la page EMIA. |
 | `#orientation` | Arbre « L'EMIA peut-elle vous aider ? ». |
-| `#reperes` | Sommaire vers `#repere-autisme`, `#repere-comportements`, `#repere-galaxie` (roue), `#repere-lexique`. |
+| `#contact` | Nous contacter : téléphone, horaires, mail, adresse, les trois temps d'une demande, urgence 15/112. Aussi relié depuis le pied de page. |
+| `#reperes` | Ancien sommaire de Comprendre, gardé pour les liens déjà diffusés (le menu mène à `#repere-autisme`). Vers `#repere-autisme`, `#repere-comportements`, `#repere-galaxie` (roue), `#repere-lexique`. |
 | `#ressources` | Les outils (BAF, Comment je me sens). |
 | `#actus`, `#actu-<id>` | Liste des actus et une page par actu (adresse à reprendre dans les posts LinkedIn). |
 | `#notes` | Notes de version. |
@@ -54,6 +57,7 @@ Aucun formulaire en ligne : les demandes passent par téléphone ou mail (le for
 
 Pas d'auteur nommé pour le hub (« Créé par l'EMIA35 »), mais les créateurs sous chaque outil dans Ressources.
 « EMIA35 » du titre : couleurs pleines du logo, à la demande d'Arthur. Exception assumée à la section 4 de la charte (orange, cyan et vert purs interdits en texte sur blanc), à reporter dans la prochaine version.
+Organisation du hub (09/11/2026) : menu permanent par rubrique plutôt que modules sur l'accueil, après le constat d'Arthur qu'on ne trouvait pas instinctivement ce qu'on cherchait. Le logo texte EMIA35 n'est plus en haut à droite (pas la place à côté du menu) ; toutes les anciennes adresses restent valables.
 Logos partenaires du pied de page plus petits que les 40 mm de la charte Adapei, à la demande d'Arthur.
 Le pro installe `/hub/douleur/` sur l'écran de la personne. Trois appuis sur la fleur de l'outil mènent à `../?retour=douleur`, qui affiche en haut du hub « Revenir à Comment je me sens ».
 Actus : on écrit le texte dans le hub, le post LinkedIn renvoie vers `#actu-<id>`. Pas de fil LinkedIn intégré (traceurs, accord de LinkedIn nécessaire).

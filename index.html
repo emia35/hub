@@ -399,19 +399,86 @@ section.page-roue{flex:1;min-width:0;display:flex;overflow:hidden}
   .logo-emia img{width:120px}
 }
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+
+/* ===== Nouvelle forme du hub : menu, sous-menu, accueil, contact ===== */
+.entete-ligne{gap:18px}
+.menu{display:flex;align-items:center;justify-content:flex-end;gap:0;flex:1;min-width:0;margin-left:20px}
+.menu a:not(.bouton){display:inline-flex;align-items:center;min-height:44px;padding:0 10px;border-radius:999px;color:var(--emia-marine);font:600 15px var(--emia-police-titre);text-decoration:none;white-space:nowrap}
+.menu a:not(.bouton):hover{background:var(--emia-fond-clair)}
+.menu a[aria-current="true"]:not(.bouton){background:var(--emia-bleu-pastel)}
+.menu-cta{margin-left:8px;min-height:44px;padding:6px 18px;font-size:15px;white-space:nowrap}
+.menu-cta[aria-current="true"]{background:var(--emia-marine);border-color:var(--emia-marine)}
+.burger{display:none;align-items:center;gap:8px;min-height:44px;padding:0 16px;border:var(--emia-bordure) solid var(--emia-filet);border-radius:999px;background:#fff;color:var(--emia-marine);font:600 15px var(--emia-police-titre);cursor:pointer}
+.burger svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round}
+.sous-nav{max-width:1180px;margin:0 auto;display:flex;gap:8px;padding:6px 16px 8px;overflow-x:auto}
+.sous-nav a{flex-shrink:0;display:inline-flex;align-items:center;min-height:36px;padding:0 14px;border-radius:999px;border:1.5px solid var(--emia-filet);background:#fff;color:var(--emia-marine);font:600 14px var(--emia-police-titre);text-decoration:none}
+.sous-nav a:hover{border-color:var(--emia-bleu)}
+.sous-nav a[aria-current="page"]{background:var(--emia-marine);border-color:var(--emia-marine);color:#fff}
+.lien-retour{display:none}
+.article-actu .lien-retour{display:inline-flex}
+.gros-contact{font:700 20px var(--emia-police-titre);margin:4px 0 6px}
+.gros-contact a{color:var(--emia-marine)}
+.module.bleu{background:var(--emia-bleu);color:#fff}
+.a2-hero{display:flex;align-items:center;justify-content:center;gap:32px;width:100%;max-width:980px;margin:0 auto}
+.a2-fleur{width:clamp(110px,24vh,210px);height:clamp(110px,24vh,210px);flex-shrink:0}
+.a2-hero h1{font-size:30px}
+.a2-hero p{margin:8px 0 14px;font-size:17px;line-height:1.5;max-width:620px}
+.a2-boutons{display:flex;flex-wrap:wrap;gap:10px}
+.a2-boutons .bouton{min-height:48px}
+.modules.a2-cartes{grid-template-columns:repeat(4,1fr);gap:14px}
+.a2-bandeau{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 24px;padding:10px 16px;border-radius:var(--emia-rayon);background:var(--emia-fond-clair)}
+.a2-bandeau .lien-actu{order:0;margin:0;white-space:normal;background:var(--emia-orange-pastel)}
+.a2-contact{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;font-size:15px}
+.a2-contact b{font:700 15px var(--emia-police-titre)}
+.a2-contact a{color:var(--emia-marine);font-weight:700}
+@media (max-width:1240px){
+  .burger{display:inline-flex}
+  .menu{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;gap:0;padding:8px 16px 14px;background:#fff;border-bottom:1px solid var(--emia-filet);box-shadow:0 12px 24px rgba(4,52,113,.1)}
+  .menu.ouvert{display:flex}
+  .menu a:not(.bouton){min-height:48px;padding:0 14px;border-radius:var(--emia-rayon)}
+  .menu-cta{margin:8px 0 0;justify-content:center}
+  .entete-ligne{justify-content:space-between}
+}
+@media (max-width:760px){
+  .a2-hero{flex-direction:column;text-align:center;gap:0}
+  .a2-fleur{display:none}
+  .a2-hero h1{font-size:21px}
+  .a2-hero p{margin:6px auto 10px;font-size:15px;line-height:1.4}
+  .a2-boutons{justify-content:center}
+  .a2-boutons .bouton{flex:1 1 100%;min-height:44px;padding:6px 14px;font-size:15px}
+  .modules.a2-cartes{grid-template-columns:1fr 1fr;gap:8px}
+  .a2-cartes .module{grid-template-columns:36px 1fr;padding:8px 10px;column-gap:8px}
+  .a2-cartes .module .pastille{display:none}
+  .a2-cartes .module{display:block;text-align:left}
+  .a2-cartes .module b{font-size:15px;line-height:1.2}
+  .a2-bandeau{flex-direction:column;align-items:flex-start;padding:8px 12px}
+  .a2-contact{font-size:14px}
+}
 </style>
 </head>
 <body>
 
 <header class="entete">
   <div class="entete-ligne">
-    <a class="marque" href="#accueil" aria-label="Le HUB de l'EMIA35, revenir à l'accueil">
+    <a class="marque" href="#accueil" aria-label="Le HUB de l'EMIA35, accueil">
       <img src="logos/EMIA35_fleur-reperes.svg" alt="">
       <span>Le HUB de l'<span class="lettres"><b>E</b><b>M</b><b>I</b><b>A</b><b>3</b><b>5</b></span></span>
     </a>
-    <a class="logo-emia" href="#emia" aria-label="Découvrir l'EMIA35"><img src="logos/EMIA35_logo.svg" alt="EMIA35"></a>
+    <button class="burger" id="burger" type="button" aria-expanded="false" aria-controls="menu">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><span>Menu</span>
+    </button>
+    <nav class="menu" id="menu" aria-label="Menu principal">
+      <a href="#emia" data-groupe="emia">À propos</a>
+      <a href="#processus" data-groupe="accompagnement">Accompagnement</a>
+      <a href="#repere-autisme" data-groupe="comprendre">Comprendre</a>
+      <a href="#ressources" data-groupe="outils">Outils</a>
+      <a href="#actus" data-groupe="actus">Actus</a>
+      <a href="#contact" data-groupe="contact">Contact</a>
+      <a class="bouton menu-cta" href="#orientation">L'EMIA peut-elle vous aider ?</a>
+    </nav>
   </div>
   <div class="barre"></div>
+  <nav class="sous-nav" id="sous-nav" aria-label="Dans cette rubrique" hidden></nav>
 </header>
 
 <div class="retour-outil" id="retour-outil" hidden>
@@ -421,36 +488,45 @@ section.page-roue{flex:1;min-width:0;display:flex;overflow:hidden}
 <main id="contenu">
 
   <section data-page="accueil" data-titre="Le HUB de l'EMIA35">
-    <div class="heros">
-      <img src="logos/EMIA35_fleur-reperes.svg" alt="">
-      <h1 class="sr" tabindex="-1" style="position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)">Le HUB de l'EMIA35</h1>
-      <div class="lecture">
-        <p>Ce hub rassemble ce que l'Équipe Mobile d'Intervention Autisme d'Ille-et-Vilaine met à la disposition des professionnels et des familles : comprendre comment nous intervenons, retrouver les notions qui nous servent de repères, et utiliser nos outils.</p>
-        <p>L'EMIA35 intervient auprès de personnes autistes de plus de seize ans, lorsque leurs comportements entraînent une souffrance, un risque de rupture de parcours ou une mise en danger.</p>
-      </div>
-      <div class="heros-actions">
-        <a class="bouton leger" href="#emia">En savoir plus sur l'EMIA35</a>
-        <a class="lien-actu" id="lien-actu" href="#actus" hidden></a>
+    <div class="a2-hero">
+      <img class="a2-fleur" src="logos/EMIA35_fleur-reperes.svg" alt="">
+      <div>
+        <h1 tabindex="-1">Équipe Mobile d'Intervention Autisme d'Ille-et-Vilaine</h1>
+        <p>Nous aidons à comprendre les comportements-défis des personnes autistes de 16 ans et plus, et à trouver des solutions avec elles, leurs proches et les équipes qui les accompagnent.</p>
+        <div class="a2-boutons">
+          <a class="bouton" href="#orientation">L'EMIA peut-elle vous aider ?</a>
+          <a class="bouton leger" href="#processus">Comment se passe une intervention ?</a>
+        </div>
       </div>
     </div>
 
-    <nav class="modules" aria-label="Les modules du hub">
-      <a class="module orange" href="#processus">
-        <span class="pastille"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="17" r="2.5"/><circle cx="12" cy="7" r="2.5"/><circle cx="19" cy="17" r="2.5"/><path d="M6.5 15 10.5 9M13.5 9l4 6"/></svg></span>
-        <b>Processus d'intervention</b>
-        <span class="desc">Comment se déroule une intervention de l'EMIA35, étape par étape.</span>
+    <nav class="modules a2-cartes" aria-label="Les rubriques du hub">
+      <a class="module orange" href="#emia">
+        <span class="pastille"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3"/><circle cx="17" cy="9" r="2.5"/><path d="M3.5 19c0-3.3 2.5-5.5 5.5-5.5s5.5 2.2 5.5 5.5M15 14c3 0 5.5 1.6 5.5 5"/></svg></span>
+        <b>À propos</b>
+        <span class="desc">Notre équipe, nos partenaires et nos missions.</span>
       </a>
-      <a class="module violet" href="#reperes">
-        <span class="pastille"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s7-6.1 7-11a7 7 0 1 0-14 0c0 4.9 7 11 7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-        <b>Repères</b>
-        <span class="desc">Les notions et les concepts qui aident à comprendre.</span>
+      <a class="module violet" href="#processus">
+        <span class="pastille"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="17" r="2.5"/><circle cx="12" cy="7" r="2.5"/><circle cx="19" cy="17" r="2.5"/><path d="M6.5 15 10.5 9M13.5 9l4 6"/></svg></span>
+        <b>Accompagnement</b>
+        <span class="desc">Les six étapes d'une intervention, et un exemple de bilan.</span>
+      </a>
+      <a class="module bleu" href="#repere-autisme">
+        <span class="pastille"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></svg></span>
+        <b>Comprendre</b>
+        <span class="desc">L'autisme, les comportements-défis, un petit lexique.</span>
       </a>
       <a class="module cyan" href="#ressources">
         <span class="pastille"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18M12 11.5v3"/></svg></span>
-        <b>Ressources</b>
-        <span class="desc">Notre boîte à outils, à utiliser avec vos équipes ou en famille.</span>
+        <b>Outils</b>
+        <span class="desc">La BAF et « Comment je me sens ? ».</span>
       </a>
     </nav>
+
+    <div class="a2-bandeau">
+      <a class="lien-actu" id="lien-actu" href="#actus" hidden></a>
+      <div class="a2-contact"><b>Nous contacter</b><a href="tel:+33299780145">02 99 78 01 45</a><span>du lundi au vendredi, 8h30–16h30</span><a href="#contact">Plus d'informations →</a></div>
+    </div>
   </section>
 
   <section class="page" data-page="emia" data-titre="L'EMIA35" hidden>
@@ -712,6 +788,39 @@ section.page-roue{flex:1;min-width:0;display:flex;overflow:hidden}
     <div id="article-actu"></div>
   </section>
 
+  <section class="page" data-page="contact" data-titre="Nous contacter" hidden>
+    <h1 tabindex="-1">Nous contacter</h1>
+    <p class="sous-titre">Pour poser une question, ou pour faire une demande d'intervention.</p>
+    <div class="temps">
+      <div class="carte orange">
+        <h3>Par téléphone</h3>
+        <p class="gros-contact"><a href="tel:+33299780145">02 99 78 01 45</a></p>
+        <p>Du lundi au vendredi, de 8h30 à 16h30, toute l'année sauf les week-ends et les jours fériés.</p>
+      </div>
+      <div class="carte cyan">
+        <h3>Par mail</h3>
+        <p class="gros-contact"><a href="mailto:emia35@adapei35.asso.fr">emia35@adapei35.asso.fr</a></p>
+        <p>Une coordinatrice vous recontacte sous 48 heures.</p>
+      </div>
+    </div>
+    <div class="carte vert">
+      <h3>Où nous trouver</h3>
+      <p>11 rue André et Yvonne Meynier, hall A, 2<sup>e</sup> étage, 35000 Rennes.</p>
+    </div>
+    <h2>Faire une demande d'intervention</h2>
+    <p class="etape"><i>1</i><span>Appelez-nous ou écrivez-nous : une coordinatrice vous recontacte sous 48 heures et vous propose de remplir un formulaire de demande.</span></p>
+    <p class="etape"><i>2</i><span>La demande est étudiée en réunion d'équipe : nous décidons d'intervenir, ou nous vous orientons vers le dispositif le plus adapté.</span></p>
+    <p class="etape"><i>3</i><span>Si l'intervention est retenue, la situation est inscrite sur liste d'attente, puis nous signons ensemble une convention.</span></p>
+    <div class="actions-actu">
+      <a class="bouton" href="#orientation">L'EMIA peut-elle vous aider ?</a>
+      <a class="bouton leger" href="#processus">Voir les étapes d'une intervention</a>
+    </div>
+    <div class="encadre">
+      <span class="i" aria-hidden="true">i</span>
+      <p>En cas de danger immédiat, appelez le 15 ou le 112. L'EMIA n'intervient pas en urgence.</p>
+    </div>
+  </section>
+
   <section class="page" data-page="notes" data-titre="Notes de version" hidden>
     <a class="lien-retour" href="#accueil">← Revenir à l'accueil</a>
     <h1 tabindex="-1">Notes de version</h1>
@@ -728,6 +837,7 @@ section.page-roue{flex:1;min-width:0;display:flex;overflow:hidden}
       <img src="logos/CHGR_logo.png" alt="Centre Hospitalier Guillaume Régnier">
     </div>
     <div class="pied-texte">
+      <a href="#contact">Nous contacter</a>
       <span>Créé par l'EMIA35</span>
       <span>Outil en construction, vos retours : <a href="mailto:emia35@adapei35.asso.fr">emia35@adapei35.asso.fr</a></span>
       <a class="version" href="#notes"><span id="version"></span>&nbsp;· Notes de version</a>
@@ -1036,6 +1146,12 @@ const ACTUS = [
 /* Les notes de version, la plus récente en premier. La première donne le numéro du pied de page. */
 const NOTES_VERSION = [
   {
+    version: 'v2026.11.09-1',
+    date: '9 novembre 2026',
+    titre: "Une nouvelle façon de s'y retrouver",
+    texte: "Un menu toujours visible (À propos, Accompagnement, Comprendre, Outils, Actus, Contact), un bouton « L'EMIA peut-elle vous aider ? » sur toutes les pages, un sous-menu dans chaque rubrique, un accueil qui propose deux portes d'entrée, et une page « Nous contacter »."
+  },
+  {
     version: 'v2026.11.08-8',
     date: '8 novembre 2026',
     titre: "Correctif de la roue",
@@ -1222,6 +1338,48 @@ function afficherNotes() {
     </article>`).join('');
 }
 
+/* Navigation : les pages sont rangées par rubrique ; le menu et le sous-menu disent où l'on est. */
+const GROUPES = {
+  emia: [['emia', 'Présentation'], ['equipe', "L'équipe"], ['repere-galaxie', 'Nos partenaires']],
+  accompagnement: [['processus', 'Le processus'], ['bilan-exemple', 'Un exemple de bilan']],
+  comprendre: [['repere-autisme', "C'est quoi l'autisme ?"], ['repere-comportements', 'Les comportements-défis'], ['repere-lexique', 'Petit lexique']]
+};
+const GROUPE_DE = { emia: 'emia', equipe: 'emia', 'repere-galaxie': 'emia', processus: 'accompagnement', 'bilan-exemple': 'accompagnement',
+  reperes: 'comprendre', 'repere-autisme': 'comprendre', 'repere-comportements': 'comprendre', 'repere-lexique': 'comprendre',
+  ressources: 'outils', actus: 'actus', actu: 'actus', contact: 'contact' };
+
+function fermerMenu() {
+  const m = document.getElementById('menu'), b = document.getElementById('burger');
+  if (!m) return;
+  m.classList.remove('ouvert');
+  b.setAttribute('aria-expanded', 'false');
+  b.querySelector('span').textContent = 'Menu';
+}
+function majNavigation(vue) {
+  const g = GROUPE_DE[vue];
+  document.querySelectorAll('.menu a[data-groupe]').forEach(a => {
+    if (a.dataset.groupe === g) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+  });
+  const cta = document.querySelector('.menu-cta');
+  if (vue === 'orientation') cta.setAttribute('aria-current', 'true'); else cta.removeAttribute('aria-current');
+  const sn = document.getElementById('sous-nav'), pages = GROUPES[g] || [];
+  if (pages.length > 1) {
+    sn.innerHTML = pages.map(([h, l]) => '<a href="#' + h + '"' + (h === vue || (vue === 'reperes' && h === 'repere-autisme') ? ' aria-current="page"' : '') + '>' + echapper(l) + '</a>').join('');
+    sn.hidden = false;
+  } else { sn.hidden = true; sn.innerHTML = ''; }
+  fermerMenu();
+}
+function initNavigation() {
+  const m = document.getElementById('menu'), b = document.getElementById('burger');
+  b.addEventListener('click', () => {
+    const ouvert = m.classList.toggle('ouvert');
+    b.setAttribute('aria-expanded', String(ouvert));
+    b.querySelector('span').textContent = ouvert ? 'Fermer' : 'Menu';
+  });
+  m.addEventListener('click', ev => { if (ev.target.closest('a')) fermerMenu(); });
+  document.addEventListener('keydown', ev => { if (ev.key === 'Escape') fermerMenu(); });
+}
+
 /* Une seule page visible à la fois, choisie par l'adresse (#emia, #ressources…). */
 function route(premierAffichage) {
   let voulue = decodeURIComponent(location.hash.slice(1));
@@ -1232,6 +1390,7 @@ function route(premierAffichage) {
   pages.forEach(p => { p.hidden = p !== page; });
   document.body.dataset.vue = page.dataset.page;
   document.body.classList.toggle('vue-roue', page.classList.contains('page-roue'));
+  majNavigation(page.dataset.page);
   if (ROUES[page.dataset.page]) ROUES[page.dataset.page].placer();
   const titrePage = titreActu || page.dataset.titre;
   document.title = page.dataset.page === 'accueil' ? titrePage : titrePage + ' · Le HUB de l\'EMIA35';
@@ -1600,6 +1759,7 @@ afficherOutils();
 afficherNotes();
 preparerRetourOutil();
 window.addEventListener('hashchange', () => route(false));
+initNavigation();
 route(true);
 </script>
 </body>
