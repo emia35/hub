@@ -25,6 +25,7 @@ Navigation (depuis la v2026.11.09-1) : un menu toujours visible dans l'en-tête 
 | `#processus` | Roue du processus d'intervention, six étapes. |
 | `#bilan-exemple` | À quoi ressemble un bilan : les parties du bilan fictif de Nora, un extrait par partie, le PDF complet. Reliée depuis l'étape 5 et la page EMIA. |
 | `#orientation` | Arbre « L'EMIA peut-elle vous aider ? ». |
+| `#facile` | L'EMIA35 en facile à lire et à comprendre (FALC), atteinte par le logo européen « Facile à lire » placé juste après la marque dans l'en-tête (`logos/facile-a-lire.svg`, fourni par Arthur). Arial (charte Adapei), 19-20 px, aligné à gauche (exception à la règle du texte justifié), une idée par ligne avec un pictogramme dessiné en SVG. Si la page Contact ou la présentation change, mettre à jour cette page aussi. |
 | `#contact` | Nous contacter : téléphone, horaires, mail, adresse, les trois temps d'une demande, urgence 15/112. Aussi relié depuis le pied de page. |
 | `#reperes` | Ancien sommaire de Comprendre, gardé pour les liens déjà diffusés (le menu mène à `#repere-autisme`). Vers `#repere-autisme`, `#repere-comportements`, `#repere-galaxie` (roue), `#repere-lexique`. |
 | `#ressources` | Les outils (BAF, Comment je me sens). |
@@ -64,6 +65,8 @@ Actus : on écrit le texte dans le hub, le post LinkedIn renvoie vers `#actu-<id
 Équipe : seule la photo d'Arthur est publiée ; les collègues apparaissent en silhouettes, sans nom, jusqu'à leur accord écrit.
 
 ## Restent ouverts (à faire valider par l'équipe)
+
+FALC : le texte est un premier jet de Claude. Le logo européen suppose une relecture par des personnes concernées (règles d'Inclusion Europe) : à faire relire avant de le présenter comme validé.
 
 Arbre : les interlocuteurs cités (CRA, CMP, MDPH, SAMSAH, PCPE), « l'EMIA ne pose pas de diagnostic », le seuil de la question 4 (« quotidien très difficile »), le ton des titres.
 Repères : la galaxie (MAS retirée du sanitaire, UEDE 35 et ADITSA non développés), la phrase « un comportement-défi est souvent une tentative de répondre à un besoin », les définitions du lexique.
